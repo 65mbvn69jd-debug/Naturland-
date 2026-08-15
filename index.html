@@ -2,224 +2,259 @@
 <html lang="tr">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#111827">
-<title>Zembilden İşletme V19</title>
+<title>Zembilden İşletme ULTIMATE</title>
 <style>
 *{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#f3f4f6;color:#111827}
-button,input,select{font:inherit}button{border:0;border-radius:10px;padding:11px 14px;background:#111827;color:#fff;cursor:pointer}
-button:disabled{opacity:.5;cursor:not-allowed}.login{min-height:100vh;display:grid;place-items:center;background:#111827;padding:20px}
-.box,.panel,.stat{background:#fff;border-radius:15px;padding:18px;box-shadow:0 2px 9px #0001}
-.box{width:min(430px,100%)}.field{margin:10px 0}.field label{display:block;font-weight:700;margin-bottom:5px}
-.field input,.field select,input,select{width:100%;padding:11px;border:1px solid #d1d5db;border-radius:9px}
-.err{color:#dc2626;margin-top:10px}.app{display:none}.top{background:#111827;color:#fff;padding:15px;position:sticky;top:0;z-index:5}
-.toprow{display:flex;justify-content:space-between;align-items:center;gap:10px}.nav{display:flex;gap:7px;overflow:auto;margin-top:10px}
-.nav button{background:#374151;white-space:nowrap}.nav button.active{background:#fff;color:#111827}
-main{max-width:1150px;margin:auto;padding:15px}.page{display:none}.page.active{display:block}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px}.stat b{display:block;font-size:23px;margin-top:7px}
-.row{display:flex;gap:8px;flex-wrap:wrap}.row>*{flex:1;min-width:140px}.cartrow{display:grid;grid-template-columns:2fr 90px 120px 110px 70px;gap:7px;align-items:center;margin:7px 0}
-.success{background:#15803d}.danger{background:#dc2626}.warn{background:#b45309}.muted{color:#6b7280}.small{font-size:12px}.right{text-align:right}
-.table{overflow:auto}table{width:100%;border-collapse:collapse}th,td{padding:9px;border-bottom:1px solid #e5e7eb;text-align:left;white-space:nowrap}
-.low{color:#b45309;font-weight:bold}.empty{padding:20px;text-align:center;color:#6b7280}
-@media(max-width:700px){main{padding:10px}.cartrow{grid-template-columns:1fr 65px 95px 70px 55px}.toprow{font-size:14px}}
+button,input,select,textarea{font:inherit}button{border:0;border-radius:9px;padding:10px 13px;background:#111827;color:#fff;cursor:pointer}
+button:hover{opacity:.92}.success{background:#15803d}.danger{background:#dc2626}.warn{background:#b45309}.secondary{background:#4b5563}
+.login{min-height:100vh;display:grid;place-items:center;background:#111827;padding:20px}.box{background:#fff;border-radius:18px;padding:28px;width:min(430px,100%);box-shadow:0 20px 60px #0005}
+.field{margin:10px 0}.field label{display:block;font-weight:700;font-size:13px;margin-bottom:5px}.field input,.field select,.field textarea,input,select,textarea{width:100%;padding:10px 11px;border:1px solid #d1d5db;border-radius:9px;background:#fff}
+.err{color:#dc2626;margin-top:10px}.app{display:none}.top{background:#111827;color:#fff;padding:14px;position:sticky;top:0;z-index:10}.toprow{display:flex;justify-content:space-between;align-items:center;gap:10px}.nav{display:flex;gap:6px;overflow:auto;margin-top:10px;padding-bottom:2px}.nav button{background:#374151;white-space:nowrap;font-size:13px}.nav button.active{background:#fff;color:#111827}
+main{max-width:1200px;margin:auto;padding:15px}.page{display:none}.page.active{display:block}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(165px,1fr));gap:10px}
+.card,.panel{background:#fff;border-radius:14px;padding:15px;margin-bottom:13px;box-shadow:0 2px 8px #0001}.card b{display:block;font-size:22px;margin-top:6px}.muted{color:#6b7280}.row{display:flex;gap:8px;flex-wrap:wrap}.row>*{flex:1;min-width:135px}.table{overflow:auto}table{width:100%;border-collapse:collapse}th,td{padding:8px;border-bottom:1px solid #e5e7eb;text-align:left;white-space:nowrap;font-size:13px}
+.right{text-align:right}.center{text-align:center}.total{font-size:24px;font-weight:800}.low{color:#b45309;font-weight:800}.tiny{font-size:11px}.hidden{display:none!important}
+.cartline{display:grid;grid-template-columns:2fr 70px 110px 110px 60px;gap:6px;align-items:center;padding:7px 0;border-bottom:1px solid #eee}
+.kpi{font-size:12px;color:#6b7280}.badge{display:inline-block;padding:3px 7px;border-radius:999px;background:#e5e7eb;font-size:11px}
+.receipt{width:320px;background:#fff;color:#000;padding:15px;font-family:monospace}.receipt hr{border:0;border-top:1px dashed #000}
+@media(max-width:700px){main{padding:9px}.top{padding:11px}.nav button{font-size:11px;padding:8px 9px}.cartline{grid-template-columns:1fr 50px 85px 85px 50px}table{font-size:12px}}
+@media print{body>*{display:none!important}.print-area{display:block!important}.receipt{display:block!important;margin:0 auto}}
 </style>
 </head>
 <body>
 
 <div id="login" class="login">
 <div class="box">
-<h2>🔐 Zembilden İşletme V19</h2><p class="muted">Yönetici girişi</p>
-<div class="field"><label>Kullanıcı adı</label><input id="username" value="admin" autocomplete="username"></div>
-<div class="field"><label>Şifre</label><input id="password" type="password" value="1234" autocomplete="current-password"></div>
-<button style="width:100%" onclick="doLogin()">Giriş Yap</button><div id="error" class="err"></div>
+<h2>🔐 Zembilden İşletme ULTIMATE</h2>
+<p class="muted">Tek dosya mağaza yönetim sistemi</p>
+<div class="field"><label>Kullanıcı adı</label><input id="loginUser" value="admin" autocomplete="username"></div>
+<div class="field"><label>Şifre</label><input id="loginPass" type="password" value="1234" autocomplete="current-password"></div>
+<button style="width:100%" onclick="doLogin()">Giriş Yap</button>
+<div id="loginErr" class="err"></div>
+<p class="tiny muted">Varsayılan yönetici: admin / 1234</p>
 </div></div>
 
 <div id="app">
 <header class="top">
-<div class="toprow"><strong>🛒 Zembilden İşletme V19</strong><button onclick="logout()">Çıkış</button></div>
+<div class="toprow"><div><strong>🛒 Zembilden İşletme ULTIMATE</strong><div class="tiny">Satış • Stok • Kasa • Cari • Personel • Rapor</div></div><button onclick="logout()">Çıkış</button></div>
 <div class="nav">
-<button class="active" onclick="page('home',this)">Ana Sayfa</button>
-<button onclick="page('sales',this)">🛒 Satış</button>
+<button class="active" onclick="page('home',this)">🏠 Ana</button>
+<button onclick="page('pos',this)">🛒 POS</button>
 <button onclick="page('stock',this)">📦 Stok</button>
+<button onclick="page('returns',this)">↩️ İade</button>
+<button onclick="page('purchases',this)">🧾 Alış</button>
+<button onclick="page('suppliers',this)">🚚 Tedarikçi</button>
 <button onclick="page('cash',this)">💰 Kasa</button>
 <button onclick="page('current',this)">🧾 Cari</button>
 <button onclick="page('staff',this)">👥 Personel</button>
-<button onclick="page('reports',this)">📊 Raporlar</button>
+<button onclick="page('reports',this)">📊 Rapor</button>
+<button onclick="page('settings',this)">⚙️ Ayarlar</button>
 </div></header>
 
 <main>
 <section id="home" class="page active">
-<h2>Genel Bakış</h2>
+<h2>📊 Yönetici Paneli</h2>
 <div class="grid">
-<div class="stat">Bugünkü Ciro<b id="hSales">₺0</b></div>
-<div class="stat">Bugünkü Gider<b id="hExpense">₺0</b></div>
-<div class="stat">Bugünkü Kâr<b id="hProfit">₺0</b></div>
-<div class="stat">Kasa Bakiyesi<b id="hBalance">₺0</b></div>
-<div class="stat">Ürün Çeşidi<b id="hProducts">0</b></div>
-<div class="stat">Toplam Stok<b id="hQty">0</b></div>
+<div class="card">Bugünkü Ciro<b id="kCiro">₺0</b></div>
+<div class="card">Bugünkü Maliyet<b id="kCost">₺0</b></div>
+<div class="card">Bugünkü Brüt Kâr<b id="kProfit">₺0</b></div>
+<div class="card">Bugünkü Gider<b id="kExpense">₺0</b></div>
+<div class="card">Nakit Kasa<b id="kCash">₺0</b></div>
+<div class="card">Kart Satışı<b id="kCard">₺0</b></div>
+<div class="card">Stok Maliyeti<b id="kStock">₺0</b></div>
+<div class="card">Kritik Stok<b id="kCritical">0</b></div>
 </div>
-<div class="panel"><h3>Hızlı İşlem</h3><div class="row">
-<button onclick="page('sales')">Yeni Satış</button><button onclick="page('stock')">Stok Girişi</button><button onclick="page('cash')">Kasa İşlemi</button><button onclick="page('reports')">Raporlar</button>
-</div></div>
+<div class="panel"><h3>⚡ Hızlı İşlem</h3><div class="row"><button onclick="page('pos')">Yeni Satış</button><button onclick="page('stock')">Stok</button><button onclick="page('cash')">Kasa</button><button onclick="page('reports')">Rapor</button></div></div>
+<div class="panel"><h3>⚠️ Kritik Stoklar</h3><div id="criticalList"></div></div>
 </section>
 
-<section id="sales" class="page">
+<section id="pos" class="page">
 <h2>🛒 Satış / POS</h2>
 <div class="panel">
 <div class="row">
+<div><label>Barkod / Ürün Ara</label><input id="posSearch" placeholder="Barkod veya ürün adı" oninput="fillPOS()"></div>
 <div><label>Ürün</label><select id="posProduct"></select></div>
-<div style="max-width:130px"><label>Adet</label><input id="posQty" type="number" min="1" value="1"></div>
-<div style="max-width:160px;align-self:end"><button onclick="addToCart()">Sepete Ekle</button></div>
+<div style="max-width:110px"><label>Adet</label><input id="posQty" type="number" min="1" value="1"></div>
+<div style="align-self:end;max-width:150px"><button onclick="addCart()">Sepete Ekle</button></div>
 </div>
-<div id="cart" style="margin-top:15px"></div>
-<div class="row" style="margin-top:12px">
-<div><label>Ödeme</label><select id="payment"><option value="cash">Nakit</option><option value="card">Kart</option></select></div>
-<div><label>Müşteri / not</label><input id="saleNote" placeholder="İsteğe bağlı"></div>
+<div id="cartBox" style="margin-top:12px"></div>
+<div class="row" style="margin-top:12px"><div><label>Ödeme</label><select id="posPayment"><option value="cash">Nakit</option><option value="card">Kart</option><option value="mixed">Nakit + Kart</option></select></div><div><label>İndirim</label><input id="posDiscount" type="number" min="0" value="0" oninput="renderCart()"></div><div><label>Müşteri / Not</label><input id="posNote"></div></div>
+<div class="right total">Ödenecek: <span id="posTotal">₺0</span></div>
+<div id="mixedArea" class="hidden"><div class="row"><input id="cashPart" type="number" min="0" placeholder="Nakit"><input id="cardPart" type="number" min="0" placeholder="Kart"></div></div>
+<button class="success" onclick="completeSale()">✅ Satışı Tamamla</button>
 </div>
-<h3 class="right">Toplam: <span id="cartTotal">₺0</span></h3>
-<button class="success" onclick="completeSale()">Satışı Tamamla</button>
-</div>
-<div class="panel table"><h3>Satış Geçmişi</h3>
-<table><thead><tr><th>Tarih</th><th>Fiş</th><th>Ürünler</th><th>Ödeme</th><th>Toplam</th><th>Durum</th><th></th></tr></thead><tbody id="salesTable"></tbody></table></div>
+<div class="panel table"><h3>Son Satışlar</h3><table><thead><tr><th>Tarih</th><th>Fiş</th><th>Ürünler</th><th>Ödeme</th><th>Toplam</th><th>Durum</th><th></th></tr></thead><tbody id="salesTable"></tbody></table></div>
 </section>
 
 <section id="stock" class="page">
-<h2>📦 Stok Yönetimi</h2>
-<div class="panel"><h3>Yeni Ürün</h3>
-<div class="row"><input id="pn" placeholder="Ürün adı"><input id="pb" type="number" step=".01" placeholder="Alış fiyatı"><input id="ps" type="number" step=".01" placeholder="Satış fiyatı"><input id="pq" type="number" min="0" placeholder="Başlangıç stok"><input id="minq" type="number" min="0" placeholder="Kritik stok"></div><br>
-<button onclick="addProduct()">Ürün Ekle</button></div>
-<div class="panel table"><table><thead><tr><th>Ürün</th><th>Stok</th><th>Kritik</th><th>Alış</th><th>Satış</th><th>Stok Değeri</th><th></th></tr></thead><tbody id="stockTable"></tbody></table></div>
-<div class="panel table"><h3>Stok Hareketleri</h3><table><thead><tr><th>Tarih</th><th>Ürün</th><th>İşlem</th><th>Adet</th><th>Açıklama</th></tr></thead><tbody id="movTable"></tbody></table></div>
+<h2>📦 Stok & Ürünler</h2>
+<div class="panel"><h3>Yeni Ürün</h3><div class="row">
+<input id="pBarcode" placeholder="Barkod">
+<input id="pName" placeholder="Ürün adı">
+<input id="pCategory" placeholder="Kategori">
+<input id="pBuy" type="number" step=".01" placeholder="Alış fiyatı">
+<input id="pSell" type="number" step=".01" placeholder="Satış fiyatı">
+<input id="pQty" type="number" min="0" placeholder="Stok">
+<input id="pMin" type="number" min="0" placeholder="Kritik stok">
+</div><br><button onclick="addProduct()">Ürün Ekle</button></div>
+<div class="panel"><div class="row"><input id="stockSearch" placeholder="Ürün / barkod / kategori ara" oninput="renderStock()"><select id="stockCat" onchange="renderStock()"><option value="">Tüm kategoriler</option></select></div></div>
+<div class="panel table"><table><thead><tr><th>Barkod</th><th>Ürün</th><th>Kategori</th><th>Stok</th><th>Kritik</th><th>Alış</th><th>Satış</th><th>Stok Değeri</th><th></th></tr></thead><tbody id="stockTable"></tbody></table></div>
+<div class="panel table"><h3>Stok Hareketleri</h3><table><thead><tr><th>Tarih</th><th>Ürün</th><th>İşlem</th><th>Adet</th><th>Açıklama</th></tr></thead><tbody id="movementTable"></tbody></table></div>
+<div class="panel table"><h3>Fiyat Değişiklik Geçmişi</h3><table><thead><tr><th>Tarih</th><th>Ürün</th><th>Eski</th><th>Yeni</th><th>Neden</th></tr></thead><tbody id="priceTable"></tbody></table></div>
+</section>
+
+<section id="returns" class="page">
+<h2>↩️ Satış İadesi</h2>
+<div class="panel"><label>Satış seç</label><select id="returnSale" onchange="renderReturnItems()"></select><div id="returnItems"></div></div>
+</section>
+
+<section id="purchases" class="page">
+<h2>🧾 Alış / Fatura</h2>
+<div class="panel"><div class="row"><select id="purchaseSupplier"></select><input id="purchaseInvoice" placeholder="Fatura no"><select id="purchaseProduct"></select><input id="purchaseQty" type="number" min="1" placeholder="Adet"><input id="purchasePrice" type="number" step=".01" placeholder="Birim alış"><select id="purchasePay"><option value="cash">Ödendi</option><option value="debt">Borç</option></select></div><br><button onclick="addPurchase()">Alışı Kaydet</button></div>
+<div class="panel table"><table><thead><tr><th>Tarih</th><th>Fatura</th><th>Tedarikçi</th><th>Ürün</th><th>Adet</th><th>Tutar</th><th>Ödeme</th></tr></thead><tbody id="purchaseTable"></tbody></table></div>
+</section>
+
+<section id="suppliers" class="page">
+<h2>🚚 Tedarikçiler</h2>
+<div class="panel"><div class="row"><input id="supName" placeholder="Tedarikçi adı"><input id="supPhone" placeholder="Telefon"><input id="supNote" placeholder="Not"></div><br><button onclick="addSupplier()">Ekle</button></div>
+<div class="panel table"><table><thead><tr><th>Tedarikçi</th><th>Telefon</th><th>Not</th></tr></thead><tbody id="supplierTable"></tbody></table></div>
 </section>
 
 <section id="cash" class="page">
 <h2>💰 Kasa</h2>
-<div class="grid"><div class="stat">Nakit<b id="cashNet">₺0</b></div><div class="stat">Kart Satışları<b id="cardSales">₺0</b></div></div>
-<div class="panel" style="margin-top:12px"><div class="row"><select id="cashType"><option value="in">Gelir</option><option value="out">Gider</option></select><input id="cashNote" placeholder="Açıklama"><input id="cashAmount" type="number" step=".01" placeholder="Tutar"></div><br><button onclick="cashOperation()">Kasa Hareketi Kaydet</button></div>
+<div class="grid"><div class="card">Nakit Kasa<b id="cashNet">₺0</b></div><div class="card">Kart Satışı<b id="cashCard">₺0</b></div><div class="card">Toplam Gider<b id="cashExpense">₺0</b></div></div>
+<div class="panel"><div class="row"><select id="cashType"><option value="in">Gelir</option><option value="out">Gider</option></select><input id="cashNote" placeholder="Açıklama"><input id="cashAmount" type="number" step=".01" placeholder="Tutar"></div><br><button onclick="cashOp()">Kaydet</button></div>
 <div class="panel table"><table><thead><tr><th>Tarih</th><th>Tür</th><th>Açıklama</th><th>Tutar</th></tr></thead><tbody id="cashTable"></tbody></table></div>
 </section>
 
 <section id="current" class="page">
 <h2>🧾 Cari Hesap</h2>
-<div class="panel"><div class="row"><input id="cn" placeholder="Cari adı"><select id="ct"><option value="debt">Borç</option><option value="credit">Alacak</option></select><input id="ca" type="number" step=".01" placeholder="Tutar"><input id="cnote" placeholder="Açıklama"></div><br><button onclick="addCurrent()">Cari Hareketi Kaydet</button></div>
+<div class="panel"><div class="row"><input id="curName" placeholder="Cari adı"><select id="curType"><option value="debt">Borç</option><option value="credit">Alacak</option><option value="payment">Tahsilat/Ödeme</option></select><input id="curAmount" type="number" step=".01" placeholder="Tutar"><input id="curNote" placeholder="Açıklama"></div><br><button onclick="addCurrent()">Kaydet</button></div>
 <div class="panel table"><table><thead><tr><th>Tarih</th><th>Cari</th><th>Tür</th><th>Tutar</th><th>Açıklama</th></tr></thead><tbody id="currentTable"></tbody></table></div>
 </section>
 
 <section id="staff" class="page">
-<h2>👥 Personel Takip</h2>
-<div class="panel"><div class="row"><input id="sn" placeholder="Personel adı"><select id="sa"><option>Giriş</option><option>Çıkış</option></select></div><br><button onclick="staffOperation()">Kaydet</button></div>
-<div class="panel table"><table><thead><tr><th>Tarih</th><th>Personel</th><th>İşlem</th></tr></thead><tbody id="staffTable"></tbody></table></div>
+<h2>👥 Personel</h2>
+<div class="panel"><div class="row"><input id="staffName" placeholder="Personel"><select id="staffAction"><option>Giriş</option><option>Çıkış</option></select><input id="staffSalary" type="number" placeholder="Aylık maaş"><input id="staffAdvance" type="number" placeholder="Avans"><input id="staffCommission" type="number" placeholder="Prim"></div><br><button onclick="staffOp()">Kaydet</button></div>
+<div class="panel table"><table><thead><tr><th>Tarih</th><th>Personel</th><th>İşlem</th><th>Maaş</th><th>Avans</th><th>Prim</th></tr></thead><tbody id="staffTable"></tbody></table></div>
 </section>
 
 <section id="reports" class="page">
 <h2>📊 Raporlar</h2>
-<div class="panel"><div class="row"><div><label>Başlangıç</label><input id="rFrom" type="date"></div><div><label>Bitiş</label><input id="rTo" type="date"></div><div style="align-self:end"><button onclick="report()">Raporu Hesapla</button></div></div></div>
-<div class="grid"><div class="stat">Ciro<b id="rSales">₺0</b></div><div class="stat">Maliyet<b id="rCost">₺0</b></div><div class="stat">Brüt Kâr<b id="rProfit">₺0</b></div><div class="stat">Satış Adedi<b id="rQty">0</b></div></div>
-<div class="panel table"><h3>En Çok Satan Ürünler</h3><table><thead><tr><th>Ürün</th><th>Adet</th><th>Ciro</th><th>Kâr</th></tr></thead><tbody id="bestTable"></tbody></table></div>
+<div class="panel"><div class="row"><div><label>Başlangıç</label><input id="repFrom" type="date"></div><div><label>Bitiş</label><input id="repTo" type="date"></div><div style="align-self:end"><button onclick="renderReports()">Hesapla</button></div></div></div>
+<div class="grid"><div class="card">Ciro<b id="repSales">₺0</b></div><div class="card">Maliyet<b id="repCost">₺0</b></div><div class="card">Brüt Kâr<b id="repProfit">₺0</b></div><div class="card">Satış Adedi<b id="repQty">0</b></div><div class="card">Gider<b id="repExpense">₺0</b></div><div class="card">Net Kâr<b id="repNet">₺0</b></div></div>
+<div class="panel table"><h3>En Çok Satanlar</h3><table><thead><tr><th>Ürün</th><th>Adet</th><th>Ciro</th><th>Kâr</th></tr></thead><tbody id="bestTable"></tbody></table></div>
+</section>
+
+<section id="settings" class="page">
+<h2>⚙️ Ayarlar & Yedekleme</h2>
+<div class="panel"><h3>Yedekleme</h3><div class="row"><button onclick="backup()">⬇️ Verileri Yedekle</button><button onclick="document.getElementById('restoreFile').click()">⬆️ Yedekten Geri Yükle</button><input id="restoreFile" type="file" accept=".json" hidden onchange="restore(event)"></div></div>
+<div class="panel"><h3>Mağaza Bilgisi</h3><div class="row"><input id="storeName" placeholder="Mağaza adı"><input id="storePhone" placeholder="Telefon"></div><button onclick="saveSettings()">Kaydet</button></div>
+<div class="panel"><h3>Güvenlik</h3><p class="muted">Varsayılan giriş: admin / 1234</p></div>
 </section>
 </main></div>
 
+<div id="printArea" class="print-area" style="display:none"></div>
+
 <script>
-const KEY='zembilden_v19';
+const KEY='zembilden_ultimate_v1';
 let D=JSON.parse(localStorage.getItem(KEY)||'null');
-if(!D){
- const old=JSON.parse(localStorage.getItem('zembilden_v18')||'null');
+function migrate(){
+ if(D)return;
+ let old=JSON.parse(localStorage.getItem('zembilden_v19')||localStorage.getItem('zembilden_v18')||'null');
  if(old){
-  D={products:(old.products||[]).map(p=>({id:p.id,name:p.name,buy:+p.buy||0,sell:+p.sell||0,qty:+p.qty||0,min:0})),
-     sales:(old.sales||[]).map(s=>({id:s.id,date:s.date,items:[{productId:s.productId,name:s.name,qty:s.qty,price:s.total/s.qty,total:s.total}],total:s.total,payment:'cash',note:'V18 satışı',status:'Tamamlandı'})),
-     cash:old.cash||[],current:old.current||[],staff:old.staff||[],movements:[]};
- }else D={products:[],sales:[],cash:[],current:[],staff:[],movements:[]};
+  D={products:(old.products||[]).map(p=>({id:p.id,barcode:p.barcode||'',name:p.name||'',category:p.category||'',buy:+p.buy||0,sell:+p.sell||0,qty:+p.qty||0,min:+p.min||0})),sales:[],cash:old.cash||[],current:old.current||[],staff:old.staff||[],movements:old.movements||[],prices:[],purchases:[],suppliers:[],settings:{name:'Zembilden',phone:''}};
+  (old.sales||[]).forEach(s=>{if(s.items)D.sales.push(s);else D.sales.push({id:s.id,date:s.date,items:[{productId:s.productId,name:s.name,qty:s.qty,price:(s.total/(s.qty||1)),total:s.total}],total:s.total,payment:s.payment||'cash',note:s.note||'',status:s.status||'Tamamlandı'})});
+ }else D={products:[],sales:[],cash:[],current:[],staff:[],movements:[],prices:[],purchases:[],suppliers:[],settings:{name:'Zembilden',phone:''}};
 }
-D.products=D.products||[];D.sales=D.sales||[];D.cash=D.cash||[];D.current=D.current||[];D.staff=D.staff||[];D.movements=D.movements||[];
-let cart=[];
+migrate();D.products=D.products||[];D.sales=D.sales||[];D.cash=D.cash||[];D.current=D.current||[];D.staff=D.staff||[];D.movements=D.movements||[];D.prices=D.prices||[];D.purchases=D.purchases||[];D.suppliers=D.suppliers||[];D.settings=D.settings||{name:'Zembilden',phone:''};
+let CART=[];
 const money=n=>new Intl.NumberFormat('tr-TR',{style:'currency',currency:'TRY'}).format(Number(n)||0);
-const dt=()=>new Date().toLocaleString('tr-TR');
-const day=()=>new Date().toISOString().slice(0,10);
-const save=()=>{localStorage.setItem(KEY,JSON.stringify(D));render()};
-function doLogin(){
- const u=document.getElementById('username').value.trim();
- const pw=document.getElementById('password').value;
- if(u==='admin'&&pw==='1234'){
-  document.getElementById('login').style.display='none';
-  document.getElementById('app').style.display='block';
-  render();
- }else document.getElementById('error').textContent='Kullanıcı adı veya şifre hatalı.';
-}
+const now=()=>new Date().toLocaleString('tr-TR');const today=()=>new Date().toISOString().slice(0,10);
+const dateKey=s=>{let x=String(s||'').split(' ')[0];if(x.includes('.')){let a=x.split('.');return a.reverse().join('-')}return x.slice(0,10)};
+const save=()=>{localStorage.setItem(KEY,JSON.stringify(D));renderAll()};
+function doLogin(){if(loginUser.value.trim()==='admin'&&loginPass.value==='1234'){login.style.display='none';app.style.display='block';renderAll()}else loginErr.textContent='Kullanıcı adı veya şifre hatalı.'}
 function logout(){app.style.display='none';login.style.display='grid'}
-function page(id,btn){document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('.nav button').forEach(x=>x.classList.remove('active'));if(btn)btn.classList.add('active')}
+function page(id,btn){document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('.nav button').forEach(x=>x.classList.remove('active'));if(btn)btn.classList.add('active');if(id==='reports')renderReports();if(id==='returns')renderReturns()}
 function addProduct(){
- const n=pn.value.trim(),b=+pb.value||0,s=+ps.value||0,q=+pq.value||0,m=+minq.value||0;
- if(!n||s<=0||q<0)return alert('Ürün adı ve satış fiyatı gerekli.');
- const p={id:Date.now(),name:n,buy:b,sell:s,qty:q,min:m};D.products.push(p);
- if(q)D.movements.push({date:dt(),productId:p.id,name:n,type:'Giriş',qty:q,note:'İlk stok'});
- pn.value=pb.value=ps.value=pq.value=minq.value='';save();
+ let p={id:Date.now(),barcode:pBarcode.value.trim(),name:pName.value.trim(),category:pCategory.value.trim()||'Genel',buy:+pBuy.value||0,sell:+pSell.value||0,qty:+pQty.value||0,min:+pMin.value||0};
+ if(!p.name||p.sell<=0)return alert('Ürün adı ve satış fiyatı gerekli.');
+ D.products.push(p);if(p.qty)D.movements.push({date:now(),productId:p.id,name:p.name,type:'Giriş',qty:p.qty,note:'İlk stok'});clearIds(['pBarcode','pName','pCategory','pBuy','pSell','pQty','pMin']);save();
 }
-function addToCart(){
- const p=D.products.find(x=>x.id==posProduct.value),q=+posQty.value;
- if(!p||q<1)return;if(p.qty<q)return alert('Yetersiz stok.');
- const existing=cart.find(x=>x.productId===p.id);
- if(existing){if(p.qty<existing.qty+q)return alert('Stok yetersiz.');existing.qty+=q;existing.total=existing.qty*existing.price}
- else cart.push({productId:p.id,name:p.name,qty:q,price:p.sell,total:q*p.sell});
- renderCart();
+function clearIds(a){a.forEach(id=>document.getElementById(id).value='')}
+function fillPOS(){
+ let q=posSearch.value.toLowerCase().trim();let arr=D.products.filter(p=>!q||p.name.toLowerCase().includes(q)||p.barcode.toLowerCase().includes(q));posProduct.innerHTML=arr.map(p=>`<option value="${p.id}">${p.barcode||'-'} | ${p.name} — ${money(p.sell)} | stok ${p.qty}</option>`).join('');
 }
-function removeCart(i){cart.splice(i,1);renderCart()}
+function addCart(){
+ let p=D.products.find(x=>x.id==posProduct.value),q=+posQty.value;if(!p||q<1)return;if(p.qty<q)return alert('Yetersiz stok.');
+ let x=CART.find(x=>x.productId===p.id);if(x){if(p.qty<x.qty+q)return alert('Yetersiz stok.');x.qty+=q;x.total=x.qty*x.price}else CART.push({productId:p.id,name:p.name,qty:q,price:p.sell,total:q*p.sell});renderCart();
+}
 function renderCart(){
- cartTotal.textContent=money(cart.reduce((a,x)=>a+x.total,0));
- cart.innerHTML=cart.length?cart.map((x,i)=>`<div class="cartrow"><span>${x.name}</span><span>${x.qty}</span><span>${money(x.price)}</span><span>${money(x.total)}</span><button class="danger" onclick="removeCart(${i})">Sil</button></div>`):'<div class="empty">Sepet boş.</div>';
+ let sub=CART.reduce((a,x)=>a+x.total,0),disc=+posDiscount.value||0,total=Math.max(0,sub-disc);posTotal.textContent=money(total);
+ cartBox.innerHTML=CART.length?CART.map((x,i)=>`<div class="cartline"><span>${x.name}</span><span>${x.qty}</span><span>${money(x.price)}</span><span>${money(x.total)}</span><button class="danger" onclick="CART.splice(${i},1);renderCart()">Sil</button></div>`):'<div class="muted">Sepet boş.</div>';
+ mixedArea.classList.toggle('hidden',posPayment.value!=='mixed');
 }
+posPayment?.addEventListener('change',renderCart);
 function completeSale(){
- if(!cart.length)return alert('Sepet boş.');
- for(const x of cart){const p=D.products.find(p=>p.id===x.productId);if(!p||p.qty<x.qty)return alert('Stok değişmiş. Sepeti kontrol edin.')}
- const total=cart.reduce((a,x)=>a+x.total,0),id=Date.now(),paymentValue=payment.value;
- const items=cart.map(x=>({...x}));
- for(const x of items){const p=D.products.find(p=>p.id===x.productId);p.qty-=x.qty;D.movements.push({date:dt(),productId:p.id,name:p.name,type:'Satış',qty:-x.qty,note:'Fiş '+id})}
- D.sales.push({id,date:dt(),items,total,payment:paymentValue,note:saleNote.value||'',status:'Tamamlandı'});
- D.cash.push({date:dt(),type:'in',note:`Satış Fişi ${id} - ${paymentValue==='card'?'Kart':'Nakit'}`,amount:total});
- cart=[];saleNote.value='';renderCart();save();alert('Satış kaydedildi.');
+ if(!CART.length)return alert('Sepet boş.');
+ let sub=CART.reduce((a,x)=>a+x.total,0),disc=+posDiscount.value||0,total=Math.max(0,sub-disc);
+ if(posPayment.value==='mixed'&&Math.abs((+cashPart.value||0)+(+cardPart.value||0)-total)>.01)return alert('Nakit + Kart toplamı satış tutarına eşit olmalı.');
+ for(let x of CART){let p=D.products.find(p=>p.id===x.productId);if(!p||p.qty<x.qty)return alert('Stok değişmiş, sepeti kontrol edin.')}
+ let id=Date.now();CART.forEach(x=>{let p=D.products.find(p=>p.id===x.productId);p.qty-=x.qty;D.movements.push({date:now(),productId:p.id,name:p.name,type:'Satış',qty:-x.qty,note:'Fiş '+id})});
+ D.sales.push({id,date:now(),items:CART.map(x=>({...x})),subtotal:sub,discount:disc,total,payment:posPayment.value,note:posNote.value||'',status:'Tamamlandı'});
+ if(posPayment.value==='cash')D.cash.push({date:now(),type:'in',note:'Satış Fişi '+id+' - Nakit',amount:total});
+ else if(posPayment.value==='card')D.cash.push({date:now(),type:'in',note:'Satış Fişi '+id+' - Kart',amount:total});
+ else {let ca=+cashPart.value||0,cr=+cardPart.value||0;if(ca)D.cash.push({date:now(),type:'in',note:'Satış Fişi '+id+' - Nakit',amount:ca});if(cr)D.cash.push({date:now(),type:'in',note:'Satış Fişi '+id+' - Kart',amount:cr})}
+ printReceipt(D.sales[D.sales.length-1]);CART=[];posDiscount.value='0';posNote.value='';cashPart.value='';cardPart.value='';save();alert('Satış kaydedildi.');
 }
-function returnSale(id){
- const s=D.sales.find(x=>x.id===id);if(!s||s.status==='İade')return;
- if(!confirm('Bu satış tamamen iade edilsin mi?'))return;
- for(const x of s.items){const p=D.products.find(p=>p.id===x.productId);if(p){p.qty+=x.qty;D.movements.push({date:dt(),productId:p.id,name:p.name,type:'İade',qty:x.qty,note:'Fiş '+s.id})}}
- s.status='İade';
- D.cash.push({date:dt(),type:'out',note:`Satış İadesi ${s.id}`,amount:s.total});
- save();
+function printReceipt(s){
+ let items=s.items.map(x=>`<div>${x.name}<br>${x.qty} x ${money(x.price)} = ${money(x.total)}</div>`).join('');
+ printArea.innerHTML=`<div class="receipt"><h3 style="text-align:center">${D.settings.name||'Zembilden'}</h3><div>${D.settings.phone||''}</div><hr>Fiş: ${s.id}<br>${s.date}<hr>${items}<hr><b>TOPLAM: ${money(s.total)}</b><br>Ödeme: ${s.payment==='cash'?'Nakit':s.payment==='card'?'Kart':'Nakit + Kart'}<hr><div style="text-align:center">Teşekkür ederiz.</div></div>`;
 }
-function addCurrent(){
- const n=cn.value.trim(),a=+ca.value;if(!n||a<=0)return alert('Cari adı ve tutar gerekli.');
- D.current.push({date:dt(),name:n,type:ct.value,amount:a,note:cnote.value||''});cn.value=ca.value=cnote.value='';save();
+function doPrint(){window.print()}
+function renderSales(){salesTable.innerHTML=D.sales.slice().reverse().map(s=>`<tr><td>${s.date}</td><td>${s.id}</td><td>${s.items.map(x=>x.name+' ×'+x.qty).join(', ')}</td><td>${s.payment}</td><td>${money(s.total)}</td><td>${s.status}</td><td>${s.status==='Tamamlandı'?`<button class="danger" onclick="fullReturn(${s.id})">İade</button>`:'-'}</td></tr>`).join('')}
+function fullReturn(id){let s=D.sales.find(x=>x.id===id);if(!s||s.status!=='Tamamlandı')return;if(!confirm('Bu satışın tamamı iade edilsin mi?'))return;s.items.forEach(x=>{let p=D.products.find(p=>p.id===x.productId);if(p){p.qty+=x.qty;D.movements.push({date:now(),productId:p.id,name:p.name,type:'İade',qty:x.qty,note:'Fiş '+s.id})}});s.status='İade';D.cash.push({date:now(),type:'out',note:'Satış İadesi '+s.id,amount:s.total});save()}
+function renderReturns(){returnSale.innerHTML=D.sales.filter(s=>s.status==='Tamamlandı').slice().reverse().map(s=>`<option value="${s.id}">${s.id} — ${s.date} — ${money(s.total)}</option>`).join('');renderReturnItems()}
+function renderReturnItems(){let s=D.sales.find(s=>s.id==returnSale.value);if(!s){returnItems.innerHTML='<div class="muted">İade edilecek satış yok.</div>';return}returnItems.innerHTML=s.items.map((x,i)=>`<div class="panel"><b>${x.name}</b><p>${x.qty} adet × ${money(x.price)}</p><label>İade adedi</label><input id="ri${i}" type="number" min="1" max="${x.qty}" value="${x.qty}"><button class="danger" onclick="partialReturn(${s.id},${i})">Bu ürünü iade et</button></div>`).join('')}
+function partialReturn(sid,index){let s=D.sales.find(s=>s.id===sid);if(!s)return;let x=s.items[index],q=+document.getElementById('ri'+index).value;if(q<1||q>x.qty)return;let p=D.products.find(p=>p.id===x.productId);if(p){p.qty+=q;D.movements.push({date:now(),productId:p.id,name:p.name,type:'İade',qty:q,note:'Kısmi iade fiş '+s.id})}let amount=q*x.price;s.total-=amount;x.qty-=q;x.total=x.qty*x.price;if(x.qty===0)s.items.splice(index,1);D.cash.push({date:now(),type:'out',note:'Kısmi satış iadesi '+s.id,amount});if(!s.items.length)s.status='İade';save();renderReturns()}
+function renderStock(){
+ let q=(stockSearch.value||'').toLowerCase(),cat=stockCat.value||'';let cats=[...new Set(D.products.map(p=>p.category||'Genel'))].sort();stockCat.innerHTML='<option value="">Tüm kategoriler</option>'+cats.map(c=>`<option ${c===cat?'selected':''}>${c}</option>`).join('');
+ let arr=D.products.filter(p=>(!q||p.name.toLowerCase().includes(q)||p.barcode.toLowerCase().includes(q)||(p.category||'').toLowerCase().includes(q))&&(!cat||p.category===cat));
+ stockTable.innerHTML=arr.map(p=>`<tr><td>${p.barcode||'-'}</td><td>${p.name}</td><td>${p.category}</td><td class="${p.qty<=p.min?'low':''}">${p.qty}</td><td>${p.min}</td><td>${money(p.buy)}</td><td>${money(p.sell)}</td><td>${money(p.qty*p.buy)}</td><td><button onclick="editPrice(${p.id})">Fiyat</button> <button class="danger" onclick="deleteProduct(${p.id})">Sil</button></td></tr>`).join('');
+ movementTable.innerHTML=D.movements.slice().reverse().slice(0,200).map(x=>`<tr><td>${x.date}</td><td>${x.name}</td><td>${x.type}</td><td>${x.qty}</td><td>${x.note}</td></tr>`).join('');
+ priceTable.innerHTML=D.prices.slice().reverse().map(x=>`<tr><td>${x.date}</td><td>${x.name}</td><td>${money(x.old)}</td><td>${money(x.new)}</td><td>${x.note}</td></tr>`).join('');
 }
-function cashOperation(){
- const a=+cashAmount.value;if(a<=0)return alert('Tutar gerekli.');
- D.cash.push({date:dt(),type:cashType.value,note:cashNote.value||'-',amount:a});cashAmount.value=cashNote.value='';save();
-}
-function staffOperation(){const n=sn.value.trim();if(!n)return;D.staff.push({date:dt(),name:n,action:sa.value});sn.value='';save()}
-function deleteProduct(id){if(confirm('Ürün silinsin mi?')){D.products=D.products.filter(x=>x.id!==id);save()}}
-function render(){
- const today=day(),todaySales=D.sales.filter(s=>s.date.split(' ')[0].split('.').reverse().join('-')===today&&s.status!=='İade');
- const sales=todaySales.reduce((a,s)=>a+s.total,0),expense=D.cash.filter(x=>x.type==='out').reduce((a,x)=>a+x.amount,0),income=D.cash.filter(x=>x.type==='in').reduce((a,x)=>a+x.amount,0);
- hSales.textContent=money(sales);hExpense.textContent=money(expense);hProfit.textContent=money(sales-expense);hBalance.textContent=money(income-expense);
- hProducts.textContent=D.products.length;hQty.textContent=D.products.reduce((a,p)=>a+p.qty,0);
- posProduct.innerHTML=D.products.map(p=>`<option value="${p.id}">${p.name} — ${money(p.sell)} (stok: ${p.qty})</option>`).join('');
- stockTable.innerHTML=D.products.map(p=>`<tr><td>${p.name}</td><td class="${p.qty<=p.min?'low':''}">${p.qty}</td><td>${p.min}</td><td>${money(p.buy)}</td><td>${money(p.sell)}</td><td>${money(p.qty*p.buy)}</td><td><button class="danger" onclick="deleteProduct(${p.id})">Sil</button></td></tr>`).join('');
- salesTable.innerHTML=D.sales.slice().reverse().map(s=>`<tr><td>${s.date}</td><td>${s.id}</td><td>${s.items.map(x=>x.name+' ×'+x.qty).join(', ')}</td><td>${s.payment==='card'?'Kart':'Nakit'}</td><td>${money(s.total)}</td><td>${s.status}</td><td>${s.status!=='İade'?`<button class="danger" onclick="returnSale(${s.id})">İade</button>`:'-'}</td></tr>`).join('');
- cashTable.innerHTML=D.cash.slice().reverse().map(x=>`<tr><td>${x.date}</td><td>${x.type==='in'?'Gelir':'Gider'}</td><td>${x.note}</td><td>${money(x.amount)}</td></tr>`).join('');
- currentTable.innerHTML=D.current.slice().reverse().map(x=>`<tr><td>${x.date}</td><td>${x.name}</td><td>${x.type==='debt'?'Borç':'Alacak'}</td><td>${money(x.amount)}</td><td>${x.note}</td></tr>`).join('');
- staffTable.innerHTML=D.staff.slice().reverse().map(x=>`<tr><td>${x.date}</td><td>${x.name}</td><td>${x.action}</td></tr>`).join('');
- movTable.innerHTML=D.movements.slice().reverse().map(x=>`<tr><td>${x.date}</td><td>${x.name}</td><td>${x.type}</td><td>${x.qty}</td><td>${x.note}</td></tr>`).join('');
- const netCash=D.cash.filter(x=>x.type==='in'&&x.note.includes('Nakit')).reduce((a,x)=>a+x.amount,0)-D.cash.filter(x=>x.type==='out').reduce((a,x)=>a+x.amount,0);
- const cards=D.sales.filter(s=>s.payment==='card'&&s.status!=='İade').reduce((a,s)=>a+s.total,0);
- cashNet.textContent=money(netCash);cardSales.textContent=money(cards);renderCart();report();
-}
-function report(){
- const from=rFrom.value||'0000-01-01',to=rTo.value||'9999-12-31';
- const ss=D.sales.filter(s=>{const d=new Date(s.date.split(' ')[0].split('.').reverse().join('-'));return s.status!=='İade'&&d>=new Date(from)&&d<=new Date(to+'T23:59:59')});
- let cost=0,qty=0,map={};
- ss.forEach(s=>s.items.forEach(x=>{const p=D.products.find(p=>p.id===x.productId);cost+=x.qty*(p?p.buy:0);qty+=x.qty;if(!map[x.name])map[x.name]={q:0,t:0,c:0};map[x.name].q+=x.qty;map[x.name].t+=x.total;map[x.name].c+=x.qty*(p?p.buy:0)}));
- const total=ss.reduce((a,s)=>a+s.total,0);rSales.textContent=money(total);rCost.textContent=money(cost);rProfit.textContent=money(total-cost);rQty.textContent=qty;
+function editPrice(id){let p=D.products.find(p=>p.id===id),v=prompt('Yeni satış fiyatı:',p.sell);if(v===null)return;v=+v;if(v<=0)return alert('Geçersiz fiyat');D.prices.push({date:now(),name:p.name,old:p.sell,new:v,note:'Manuel fiyat değişikliği'});p.sell=v;save()}
+function deleteProduct(id){let p=D.products.find(p=>p.id===id);if(p&&p.qty>0)return alert('Stokta ürün varken silmeyin.');if(confirm('Ürün silinsin mi?')){D.products=D.products.filter(p=>p.id!==id);save()}}
+function addPurchase(){let p=D.products.find(p=>p.id==purchaseProduct.value),sup=D.suppliers.find(s=>s.id==purchaseSupplier.value),q=+purchaseQty.value,pr=+purchasePrice.value;if(!p||q<1||pr<0)return alert('Alış bilgilerini doldurun.');p.qty+=q;p.buy=pr;D.movements.push({date:now(),productId:p.id,name:p.name,type:'Alış',qty:q,note:'Fatura '+(purchaseInvoice.value||'-')});let total=q*pr;D.purchases.push({date:now(),invoice:purchaseInvoice.value||'-',supplier:sup?sup.name:'-',product:p.name,productId:p.id,qty:q,price:pr,total,payment:purchasePay.value});if(purchasePay.value==='cash')D.cash.push({date:now(),type:'out',note:'Alış Faturası '+(purchaseInvoice.value||'-'),amount:total});clearIds(['purchaseInvoice','purchaseQty','purchasePrice']);save()}
+function addSupplier(){let n=supName.value.trim();if(!n)return;D.suppliers.push({id:Date.now(),name:n,phone:supPhone.value,note:supNote.value});clearIds(['supName','supPhone','supNote']);save()}
+function cashOp(){let a=+cashAmount.value;if(a<=0)return alert('Tutar gerekli.');D.cash.push({date:now(),type:cashType.value,note:cashNote.value||'-',amount:a});clearIds(['cashNote','cashAmount']);save()}
+function addCurrent(){let n=curName.value.trim(),a=+curAmount.value;if(!n||a<=0)return alert('Cari adı ve tutar gerekli.');D.current.push({date:now(),name:n,type:curType.value,amount:a,note:curNote.value||''});clearIds(['curName','curAmount','curNote']);save()}
+function staffOp(){let n=staffName.value.trim();if(!n)return;D.staff.push({date:now(),name:n,action:staffAction.value,salary:+staffSalary.value||0,advance:+staffAdvance.value||0,commission:+staffCommission.value||0});clearIds(['staffName','staffSalary','staffAdvance','staffCommission']);save()}
+function renderReports(){
+ let f=repFrom.value||'0000-01-01',t=repTo.value||'9999-12-31',ss=D.sales.filter(s=>s.status!=='İade'&&dateKey(s.date)>=f&&dateKey(s.date)<=t),cost=0,qty=0,map={};
+ ss.forEach(s=>s.items.forEach(x=>{let p=D.products.find(p=>p.id===x.productId),c=x.qty*(p?p.buy:0);cost+=c;qty+=x.qty;if(!map[x.name])map[x.name]={q:0,t:0,c:0};map[x.name].q+=x.qty;map[x.name].t+=x.total;map[x.name].c+=c}));
+ let sales=ss.reduce((a,s)=>a+s.total,0),expenses=D.cash.filter(x=>x.type==='out'&&dateKey(x.date)>=f&&dateKey(x.date)<=t).reduce((a,x)=>a+x.amount,0);repSales.textContent=money(sales);repCost.textContent=money(cost);repProfit.textContent=money(sales-cost);repQty.textContent=qty;repExpense.textContent=money(expenses);repNet.textContent=money(sales-cost-expenses);
  bestTable.innerHTML=Object.entries(map).sort((a,b)=>b[1].t-a[1].t).map(([n,x])=>`<tr><td>${n}</td><td>${x.q}</td><td>${money(x.t)}</td><td>${money(x.t-x.c)}</td></tr>`).join('');
 }
-(function initDates(){rFrom.value=new Date().toISOString().slice(0,8)+'01';rTo.value=day()})();
+function backup(){let blob=new Blob([JSON.stringify(D,null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='zembilden-yedek-'+today()+'.json';a.click();URL.revokeObjectURL(a.href)}
+function restore(e){let f=e.target.files[0];if(!f)return;let r=new FileReader();r.onload=()=>{try{let x=JSON.parse(r.result);if(!x.products||!x.sales)return alert('Geçersiz yedek.');D=x;save();alert('Yedek geri yüklendi.')}catch(_){alert('Yedek okunamadı.')}};r.readAsText(f)}
+function saveSettings(){D.settings.name=storeName.value||'Zembilden';D.settings.phone=storePhone.value||'';save();alert('Ayarlar kaydedildi.')}
+function renderAll(){
+ fillPOS();renderCart();renderSales();renderStock();renderReturns();
+ purchaseSupplier.innerHTML=D.suppliers.map(s=>`<option value="${s.id}">${s.name}</option>`).join('');purchaseProduct.innerHTML=D.products.map(p=>`<option value="${p.id}">${p.name} — stok ${p.qty}</option>`).join('');
+ supplierTable.innerHTML=D.suppliers.map(s=>`<tr><td>${s.name}</td><td>${s.phone}</td><td>${s.note}</td></tr>`).join('');
+ purchaseTable.innerHTML=D.purchases.slice().reverse().map(x=>`<tr><td>${x.date}</td><td>${x.invoice}</td><td>${x.supplier}</td><td>${x.product}</td><td>${x.qty}</td><td>${money(x.total)}</td><td>${x.payment==='cash'?'Ödendi':'Borç'}</td></tr>`).join('');
+ cashTable.innerHTML=D.cash.slice().reverse().map(x=>`<tr><td>${x.date}</td><td>${x.type==='in'?'Gelir':'Gider'}</td><td>${x.note}</td><td>${money(x.amount)}</td></tr>`).join('');
+ currentTable.innerHTML=D.current.slice().reverse().map(x=>`<tr><td>${x.date}</td><td>${x.name}</td><td>${x.type}</td><td>${money(x.amount)}</td><td>${x.note}</td></tr>`).join('');
+ staffTable.innerHTML=D.staff.slice().reverse().map(x=>`<tr><td>${x.date}</td><td>${x.name}</td><td>${x.action}</td><td>${money(x.salary)}</td><td>${money(x.advance)}</td><td>${money(x.commission)}</td></tr>`).join('');
+ let d=today(),ss=D.sales.filter(s=>s.status!=='İade'&&dateKey(s.date)===d),sales=ss.reduce((a,s)=>a+s.total,0),cost=ss.reduce((a,s)=>a+s.items.reduce((b,x)=>{let p=D.products.find(p=>p.id===x.productId);return b+x.qty*(p?p.buy:0)},0),0),exp=D.cash.filter(x=>x.type==='out'&&dateKey(x.date)===d).reduce((a,x)=>a+x.amount,0),cashIn=D.cash.filter(x=>x.type==='in'&&x.note.includes('Nakit')).reduce((a,x)=>a+x.amount,0),cashOut=D.cash.filter(x=>x.type==='out').reduce((a,x)=>a+x.amount,0),card=D.cash.filter(x=>x.type==='in'&&x.note.includes('Kart')).reduce((a,x)=>a+x.amount,0);
+ kCiro.textContent=money(sales);kCost.textContent=money(cost);kProfit.textContent=money(sales-cost);kExpense.textContent=money(exp);kCash.textContent=money(cashIn-cashOut);kCard.textContent=money(card);kStock.textContent=money(D.products.reduce((a,p)=>a+p.qty*p.buy,0));let crit=D.products.filter(p=>p.qty<=p.min);kCritical.textContent=crit.length;criticalList.innerHTML=crit.length?crit.map(p=>`<div class="panel"><b>${p.name}</b> — stok ${p.qty}, kritik ${p.min}</div>`).join(''):'Kritik stok yok.';
+ cashNet.textContent=money(cashIn-cashOut);cashCard.textContent=money(card);cashExpense.textContent=money(D.cash.filter(x=>x.type==='out').reduce((a,x)=>a+x.amount,0));
+ renderReports();storeName.value=D.settings.name||'Zembilden';storePhone.value=D.settings.phone||'';
+}
+repFrom.value=new Date().toISOString().slice(0,8)+'01';repTo.value=today();
 </script>
 </body>
 </html>
