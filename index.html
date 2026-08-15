@@ -99,6 +99,15 @@ main{max-width:1200px;margin:auto;padding:15px}.page{display:none}.page.active{d
 <input id="pMin" type="number" min="0" placeholder="Kritik stok">
 </div><br><button onclick="addProduct()">Ürün Ekle</button></div>
 <div class="panel"><div class="row"><input id="stockSearch" placeholder="Ürün / barkod / kategori ara" oninput="renderStock()"><select id="stockCat" onchange="renderStock()"><option value="">Tüm kategoriler</option></select></div></div>
+<div class="panel">
+<h3>📥 Excel / CSV Ürün Aktarımı</h3>
+<p class="muted tiny">CSV sütunları: barkod, ürün, kategori, alış, satış, stok, kritik. Türkçe karakterli CSV dosyaları desteklenir.</p>
+<div class="row">
+<input id="csvFile" type="file" accept=".csv,text/csv">
+<button onclick="importCSV()">CSV'den Ürünleri İçeri Aktar</button>
+<button class="secondary" onclick="exportCSV()">Ürünleri CSV Olarak Dışa Aktar</button>
+</div>
+</div>
 <div class="panel table"><table><thead><tr><th>Barkod</th><th>Ürün</th><th>Kategori</th><th>Stok</th><th>Kritik</th><th>Alış</th><th>Satış</th><th>Stok Değeri</th><th></th></tr></thead><tbody id="stockTable"></tbody></table></div>
 <div class="panel table"><h3>Stok Hareketleri</h3><table><thead><tr><th>Tarih</th><th>Ürün</th><th>İşlem</th><th>Adet</th><th>Açıklama</th></tr></thead><tbody id="movementTable"></tbody></table></div>
 <div class="panel table"><h3>Fiyat Değişiklik Geçmişi</h3><table><thead><tr><th>Tarih</th><th>Ürün</th><th>Eski</th><th>Yeni</th><th>Neden</th></tr></thead><tbody id="priceTable"></tbody></table></div>
@@ -241,6 +250,56 @@ function renderReports(){
 function backup(){let blob=new Blob([JSON.stringify(D,null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='zembilden-yedek-'+today()+'.json';a.click();URL.revokeObjectURL(a.href)}
 function restore(e){let f=e.target.files[0];if(!f)return;let r=new FileReader();r.onload=()=>{try{let x=JSON.parse(r.result);if(!x.products||!x.sales)return alert('Geçersiz yedek.');D=x;save();alert('Yedek geri yüklendi.')}catch(_){alert('Yedek okunamadı.')}};r.readAsText(f)}
 function saveSettings(){D.settings.name=storeName.value||'Zembilden';D.settings.phone=storePhone.value||'';save();alert('Ayarlar kaydedildi.')}
+
+function parseCSV(text){
+ text=text.replace(/^\uFEFF/,'');
+ const rows=[];let row=[],cell='',quote=false;
+ for(let i=0;i<text.length;i++){let c=text[i];
+  if(c==='"'){if(quote&&text[i+1]==='"'){cell+='"';i++}else quote=!quote}
+  else if(c===','&&!quote){row.push(cell.trim());cell=''}
+  else if((c==='\n'||c==='\r')&&!quote){if(c==='\r'&&text[i+1]==='\n')i++;row.push(cell.trim());cell='';if(row.some(x=>x!==''))rows.push(row);row=[]}
+  else cell+=c;
+ }
+ if(cell!==''||row.length){row.push(cell.trim());if(row.some(x=>x!==''))rows.push(row)}
+ return rows;
+}
+function importCSV(){
+ const file=document.getElementById('csvFile').files[0];
+ if(!file)return alert('Önce CSV dosyası seçin.');
+ const r=new FileReader();
+ r.onload=()=>{
+  try{
+   let rows=parseCSV(r.result);if(rows.length<2)return alert('CSV boş veya hatalı.');
+   let h=rows[0].map(x=>x.toLowerCase().normalize('NFD').replace(/[\\u0300-\\u036f]/g,'').trim());
+   const idx=(...names)=>{for(const n of names){let i=h.indexOf(n);if(i>=0)return i}return -1};
+   let ib=idx('barkod','barcode'),inn=idx('urun','urun adi','ürün','ürün adi','name'),ic=idx('kategori','category'),ibu=idx('alis','alış','buy'),ise=idx('satis','satış','sell'),iq=idx('stok','adet','qty'),im=idx('kritik','min','minimum');
+   if(inn<0)return alert('CSV içinde ürün sütunu bulunamadı.');
+   let count=0;
+   rows.slice(1).forEach(rw=>{
+    let name=(rw[inn]||'').trim();if(!name)return;
+    let barcode=ib>=0?(rw[ib]||'').trim():'';
+    let existing=D.products.find(p=>(barcode&&p.barcode===barcode)||p.name.toLowerCase()===name.toLowerCase());
+    let b=ibu>=0?parseFloat(String(rw[ibu]||'').replace(',','.'))||0:0;
+    let s=ise>=0?parseFloat(String(rw[ise]||'').replace(',','.'))||0:0;
+    let q=iq>=0?parseFloat(String(rw[iq]||'').replace(',','.'))||0:0;
+    let m=im>=0?parseFloat(String(rw[im]||'').replace(',','.'))||0:0;
+    let cat=ic>=0?(rw[ic]||'Genel').trim()||'Genel':'Genel';
+    if(existing){existing.barcode=barcode||existing.barcode;existing.category=cat; if(b>0)existing.buy=b;if(s>0)existing.sell=s;existing.qty=q;existing.min=m}
+    else {let p={id:Date.now()+Math.random(),barcode,name,category:cat,buy:b,sell:s,qty:q,min:m};D.products.push(p);if(q)D.movements.push({date:now(),productId:p.id,name,type:'Giriş',qty:q,note:'CSV aktarımı'});}
+    count++;
+   });
+   save();alert(count+' ürün içeri aktarıldı.');
+  }catch(e){alert('CSV okunamadı: '+e.message)}
+ };
+ r.readAsText(file,'UTF-8');
+}
+function exportCSV(){
+ const esc=v=>'"'+String(v??'').replace(/"/g,'""')+'"';
+ let out='barkod,ürün,kategori,alış,satış,stok,kritik\n';
+ D.products.forEach(p=>out+=[p.barcode,p.name,p.category,p.buy,p.sell,p.qty,p.min].map(esc).join(',')+'\n');
+ let blob=new Blob(['\uFEFF'+out],{type:'text/csv;charset=utf-8'});
+ let a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='zembilden-urunler-'+today()+'.csv';a.click();URL.revokeObjectURL(a.href);
+}
 function renderAll(){
  fillPOS();renderCart();renderSales();renderStock();renderReturns();
  purchaseSupplier.innerHTML=D.suppliers.map(s=>`<option value="${s.id}">${s.name}</option>`).join('');purchaseProduct.innerHTML=D.products.map(p=>`<option value="${p.id}">${p.name} — stok ${p.qty}</option>`).join('');
