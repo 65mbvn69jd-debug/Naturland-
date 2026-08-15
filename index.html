@@ -3,749 +3,188 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Zembilden İşletme</title>
+<title>Zembilden İşletme V18</title>
 <style>
 *{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#f3f4f6;color:#111827}
-header{background:#111827;color:#fff;padding:18px}header h1{margin:0 0 4px;font-size:22px}
-nav{display:flex;gap:7px;overflow:auto;background:#fff;padding:10px;position:sticky;top:0;z-index:5;border-bottom:1px solid #ddd}
-nav button,.tool{border:0;border-radius:9px;padding:10px 12px;font-weight:700;white-space:nowrap}
-nav button.active{background:#111827;color:#fff}main{max-width:950px;margin:auto;padding:14px}
-.page{display:none}.page.active{display:block}.cards{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
-.card,section{background:#fff;border-radius:14px;padding:15px;margin-bottom:14px;box-shadow:0 2px 8px #0000000d}
-.card b{display:block;font-size:20px;margin-top:5px}h2{font-size:18px;margin:0 0 12px}
-label{display:block;font-size:13px;font-weight:700;margin:9px 0 5px}
-input,select{width:100%;padding:11px;border:1px solid #d1d5db;border-radius:9px;font-size:15px}
-.primary{background:#111827;color:#fff;border:0;border-radius:9px;padding:11px 15px;font-weight:700;margin-top:10px}
-.danger{background:#dc2626;color:#fff;border:0;border-radius:8px;padding:7px}
-table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:9px;border-bottom:1px solid #eee}
-.muted{color:#6b7280}.total{font-size:24px;font-weight:800}
-.login{position:fixed;inset:0;background:#111827;display:flex;align-items:center;justify-content:center;padding:20px;z-index:99}
-.loginbox{background:#fff;width:min(380px,100%);padding:24px;border-radius:16px}.hidden{display:none!important}
-@media(min-width:700px){.cards{grid-template-columns:repeat(4,1fr)}}
-
-/* V17 mobile app shell */
-@media(max-width:700px){
- body{padding-bottom:72px}
- header{padding:14px;position:sticky;top:0;z-index:10}
- header div{display:flex;gap:5px;overflow:auto}
- header .tool{font-size:12px;padding:8px}
- nav{position:fixed;bottom:0;left:0;right:0;top:auto;height:66px;z-index:20;box-shadow:0 -3px 12px #0002;overflow-x:auto}
- nav button{font-size:11px;padding:8px 10px;min-width:72px}
- main{padding:10px}
- section{border-radius:12px}
- .cards{grid-template-columns:repeat(2,1fr);gap:8px}
- .card{padding:12px;font-size:12px}.card b{font-size:17px}
- input,select{font-size:16px;padding:12px}
- .primary{width:100%;padding:13px}
- table{font-size:12px;display:block;overflow-x:auto;white-space:nowrap}
-}
-.app-home{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
-.app-home button{border:0;border-radius:14px;padding:18px 8px;font-weight:800;background:#fff;box-shadow:0 2px 8px #00000012}
-@media(min-width:701px){.app-home{grid-template-columns:repeat(4,1fr)}}
+button,input,select{font:inherit}button{border:0;border-radius:10px;padding:11px 14px;background:#111827;color:#fff;cursor:pointer}
+.login{min-height:100vh;display:grid;place-items:center;background:#111827;padding:20px}.box{background:#fff;padding:28px;border-radius:18px;width:min(420px,100%)}.field{margin:12px 0}.field label{display:block;font-weight:700;margin-bottom:6px}.field input,.field select{width:100%;padding:12px;border:1px solid #d1d5db;border-radius:10px}.err{color:#dc2626;margin-top:12px}
+#app{display:none}.top{background:#111827;color:#fff;padding:15px;position:sticky;top:0;z-index:5}.toprow{display:flex;justify-content:space-between;align-items:center}.nav{display:flex;gap:7px;overflow:auto;margin-top:10px}.nav button{background:#374151;white-space:nowrap}.nav button.active{background:#fff;color:#111827}
+main{max-width:1100px;margin:auto;padding:16px}.page{display:none}.page.active{display:block}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px}.card,.panel{background:#fff;border-radius:14px;padding:16px;margin-bottom:14px;box-shadow:0 2px 8px #0001}.card b{display:block;font-size:23px;margin-top:7px}.row{display:flex;gap:8px;flex-wrap:wrap}.row>*{flex:1;min-width:140px}.success{background:#15803d}.danger{background:#dc2626}.muted{color:#6b7280}.table{overflow:auto}table{width:100%;border-collapse:collapse}th,td{padding:9px;border-bottom:1px solid #e5e7eb;text-align:left}
+@media(max-width:600px){main{padding:10px}.nav{padding-bottom:2px}}
 </style>
 </head>
 <body>
 
-<div id="loginScreen" class="login">
-<div class="loginbox">
-<h2>🔐 Zembilden İşletme</h2><p class="muted">Yönetici girişi</p>
-<label>Kullanıcı adı</label><input id="username" value="admin">
-<label>Şifre</label><input id="password" type="password" value="1234">
-<button class="primary" onclick="login()">Giriş Yap</button>
-<p id="loginError" style="color:#dc2626"></p>
+<div id="login" class="login">
+<div class="box">
+<h2>🔐 Zembilden İşletme V18</h2>
+<p class="muted">Yönetici girişi</p>
+<div class="field"><label>Kullanıcı adı</label><input id="username" value="admin"></div>
+<div class="field"><label>Şifre</label><input id="password" type="password" value="1234"></div>
+<button style="width:100%" onclick="login()">Giriş Yap</button>
+<div id="error" class="err"></div>
 </div></div>
 
-<header>
-<h1>🛒 Zembilden İşletme</h1><small>Satış • Stok • Kasa • Cari • Personel</small><div id="activeUserLabel" style="margin-top:5px;font-size:12px;opacity:.8"></div>
-<div style="margin-top:10px">
-<button class="tool" onclick="backup()">⬇️ Yedekle</button>
-<button class="tool" onclick="document.getElementById('restore').click()">⬆️ Geri Yükle</button>
-<button class="tool" onclick="logout()">🔒 Çıkış</button>
-<input id="restore" type="file" accept=".json" hidden onchange="restoreData(event)">
+<div id="app">
+<header class="top">
+<div class="toprow"><strong>🛒 Zembilden İşletme V18</strong><button onclick="logout()">Çıkış</button></div>
+<div class="nav">
+<button class="active" onclick="page('home',this)">Ana Sayfa</button>
+<button onclick="page('sales',this)">Satış</button>
+<button onclick="page('stock',this)">Stok</button>
+<button onclick="page('cash',this)">Kasa</button>
+<button onclick="page('current',this)">Cari</button>
+<button onclick="page('staff',this)">Personel</button>
 </div>
 </header>
 
-<nav>
-<button class="active" onclick="page('home',this)">🏠 Ana</button><button onclick="page('dashboard',this)">📊 Yönetici</button>
-<button onclick="page('sales',this)">🛒 Satış</button><button onclick="page('pos',this)">⚡ POS</button><button onclick="page('realcash',this)">💰 Gerçek Kasa</button>
-<button onclick="page('stock',this)">📦 Stok</button><button onclick="page('moves',this)">🔄 Stok Hareketleri</button><button onclick="page('prices',this)">💲 Fiyat Geçmişi</button><button onclick="page('returns',this)">↩️ İadeler</button><button onclick="page('purchases',this)">🧾 Alış Faturaları</button><button onclick="page('suppliers',this)">🚚 Tedarikçiler</button><button onclick="page('cari2',this)">🧾 Cari Yönetimi</button>
-<button onclick="page('cash',this)">💰 Kasa</button>
-<button onclick="page('current',this)">🧾 Cari</button>
-<button onclick="page('staff',this)">👥 Personel</button><button onclick="page('users',this)">🔐 Kullanıcılar</button>
-<button onclick="page('reports',this)">📊 Rapor</button>
-</nav>
-
 <main>
-<div id="dashboard" class="page">
-<section><h2>📊 Zembilden Yönetim Paneli</h2>
-<div class="cards">
-<div class="card">Bugünkü Ciro<b id="v16Ciro">₺0</b></div>
-<div class="card">Net Kâr<b id="v16Profit">₺0</b></div>
-<div class="card">Satış Adedi<b id="v16Qty">0</b></div>
-<div class="card">Bugünkü İade<b id="v16Return">₺0</b></div>
-<div class="card">Bugünkü Gider<b id="v16Expense">₺0</b></div>
-<div class="card">Stok Değeri<b id="v16Stock">₺0</b></div>
-<div class="card">Müşteri Alacağı<b id="v16Receivable">₺0</b></div>
-<div class="card">Tedarikçi Borcu<b id="v16SupplierDebt">₺0</b></div>
-</div></section>
-<section><h2>📈 Son 7 Gün</h2><div id="v16SevenDays"></div></section>
-
-<section><h2>📊 Yönetici Kontrol Merkezi</h2>
-<div class="cards">
-<div class="card">Bugünkü Ciro<b id="dSales">₺0</b></div>
-<div class="card">Bugünkü Net Kâr<b id="dProfit">₺0</b></div>
-<div class="card">Nakit Kasa<b id="dCash">₺0</b></div>
-<div class="card">POS Satış<b id="dPos">₺0</b></div>
-<div class="card">Cari Alacak<b id="dReceivable">₺0</b></div>
-<div class="card">Cari Borç<b id="dDebt">₺0</b></div>
-<div class="card">Stok Maliyeti<b id="dStockCost">₺0</b></div>
-<div class="card">Kritik Stok<b id="dCritical">0</b></div>
-</div></section>
-<section><h2>🏆 En Çok Satanlar</h2><div id="dashTop"></div></section>
-<section><h2>💎 En Kârlı Ürünler</h2><div id="dashProfitTop"></div></section><section><h2>👥 Personel Performansı</h2><div id="staffPerformance"></div></section>
-<section><h2>💵 Bu Ay Personel Maliyeti</h2>
-<div class="cards"><div class="card">Maaş<b id="dSalary">₺0</b></div><div class="card">Prim<b id="dCommission">₺0</b></div><div class="card">Avans<b id="dAdvance">₺0</b></div><div class="card">Kalan Ödeme<b id="dPayroll">₺0</b></div></div>
-</section>
-<section><h2>📦 Stok Özeti</h2><p>Toplam stok adedi: <b id="dStockQty">0</b></p><p>Tahmini satış değeri: <b id="dStockSales">₺0</b></p><p>Beklenen stok kârı: <b id="dStockProfit">₺0</b></p></section>
-</div>
-<div id="home" class="page active">
-<section><h2>⚡ Hızlı İşlemler</h2>
-<div class="app-home">
-<button onclick="quickPage('pos')">⚡<br>Hızlı POS</button>
-<button onclick="quickPage('sales')">🛒<br>Satış</button>
-<button onclick="quickPage('stock')">📦<br>Stok</button>
-<button onclick="quickPage('realcash')">💰<br>Kasa</button>
+<section id="home" class="page active">
+<h2>Genel Bakış</h2>
+<div class="grid">
+<div class="card">Bugünkü Ciro<b id="ciro">₺0</b></div>
+<div class="card">Bugünkü Gider<b id="gider">₺0</b></div>
+<div class="card">Bugünkü Kâr<b id="profit">₺0</b></div>
+<div class="card">Kasa Bakiyesi<b id="balance">₺0</b></div>
+<div class="card">Stok Çeşidi<b id="stockCount">0</b></div>
 </div>
 </section>
 
-<section><h2>Bugünün Özeti</h2><div class="cards">
-<div class="card">Ciro<b id="hSales">₺0</b></div>
-<div class="card">Maliyet<b id="hCost">₺0</b></div>
-<div class="card">Gider<b id="hExpense">₺0</b></div>
-<div class="card">Net Kâr<b id="hProfit">₺0</b></div>
-</div></section>
-<section><h2>⚠️ Kritik Stok</h2><div id="lowStock">Yok.</div></section>
+<section id="sales" class="page">
+<h2>🛒 Satış</h2>
+<div class="panel">
+<div class="row">
+<div><label>Ürün</label><select id="saleProduct"></select></div>
+<div><label>Adet</label><input id="saleQty" type="number" min="1" value="1"></div>
+</div><br>
+<button class="success" onclick="sell()">Satışı Tamamla</button>
 </div>
+<div class="panel table"><table><thead><tr><th>Tarih</th><th>Ürün</th><th>Adet</th><th>Tutar</th><th></th></tr></thead><tbody id="salesTable"></tbody></table></div>
+</section>
 
-<div id="sales" class="page">
-<section><h2>🛒 Satış</h2>
-<label>Ürün ara / barkod</label><input id="search" oninput="fillProducts()" placeholder="Ürün adı veya barkod">
-<label>Ürün</label><select id="productSelect"></select>
-<label>Adet</label><input id="qty" type="number" min="1" value="1">
-<button class="primary" onclick="addCart()">Sepete Ekle</button>
-</section>
-<section><h2>🧺 Sepet</h2><div id="cart"></div>
-<p>Ara toplam: <b id="subtotal">₺0</b></p>
-<label>İndirim</label><input id="discount" type="number" min="0" value="0" oninput="renderCart()">
-<p class="total">Ödenecek: <span id="total">₺0</span></p>
-<label>Ödeme</label><select id="pay" onchange="toggleCash()"><option>Nakit</option><option>Kredi Kartı</option></select>
-<div id="cashArea"><label>Alınan</label><input id="received" type="number" min="0" oninput="renderChange()"><p>Para üstü: <b id="change">₺0</b></p></div>
-<button class="primary" onclick="finishSale()">✅ Satışı Tamamla</button>
-</section>
-<section><h2>Son Satışlar</h2><div id="saleHistory"></div></section>
+<section id="stock" class="page">
+<h2>📦 Stok</h2>
+<div class="panel">
+<div class="row">
+<input id="productName" placeholder="Ürün adı">
+<input id="buyPrice" type="number" step=".01" placeholder="Alış fiyatı">
+<input id="sellPrice" type="number" step=".01" placeholder="Satış fiyatı">
+<input id="stockQty" type="number" min="0" placeholder="Adet">
+</div><br><button onclick="addProduct()">Ürün Ekle</button>
 </div>
+<div class="panel table"><table><thead><tr><th>Ürün</th><th>Stok</th><th>Alış</th><th>Satış</th><th></th></tr></thead><tbody id="stockTable"></tbody></table></div>
+</section>
 
-<div id="cari2" class="page"><section><h2>🧾 Cari İşlem</h2><label>Cari türü</label><select id="cariType"><option value="musteri">Müşteri</option><option value="tedarikci">Tedarikçi</option></select><label>Ad / Ünvan</label><input id="cariName"><label>İşlem</label><select id="cariAction"><option value="borc">Borç</option><option value="alacak">Alacak</option><option value="tahsilat">Tahsilat</option><option value="odeme">Ödeme</option></select><label>Tutar</label><input id="cariAmount" type="number" min="0" step=".01"><label>Ödeme şekli</label><select id="cariPay"><option>Nakit</option><option>POS</option></select><label>Açıklama</label><input id="cariNote"><button class="primary" onclick="addCari2()">İşlemi Kaydet</button></section><section><h2>💳 Cari Bakiyeler</h2><div id="cariBalances"></div></section><section><h2>📋 Cari Ekstre</h2><input id="cariSearch" placeholder="Cari ara" oninput="renderCari2()"><div id="cariStatement"></div></section></div><div id="suppliers" class="page">
-<section><h2>🚚 Tedarikçi Yönetimi</h2>
-<label>Tedarikçi adı</label><input id="supName">
-<label>Telefon</label><input id="supPhone">
-<label>Not</label><input id="supNote">
-<button class="primary" onclick="addSupplier()">Tedarikçi Ekle</button>
-</section>
-<section><h2>Tedarikçiler</h2><div id="supplierList"></div></section>
+<section id="cash" class="page">
+<h2>💰 Kasa</h2>
+<div class="panel">
+<div class="row">
+<select id="cashType"><option value="in">Gelir</option><option value="out">Gider</option></select>
+<input id="cashNote" placeholder="Açıklama">
+<input id="cashAmount" type="number" step=".01" placeholder="Tutar">
+</div><br><button onclick="cashOperation()">Kaydet</button>
 </div>
-<div id="purchases" class="page">
-<section><h2>🧾 Alış Faturası</h2>
-<label>Tedarikçi</label><select id="purchaseSupplier"></select>
-<label>Fatura No</label><input id="invoiceNo">
-<label>Ürün</label><select id="purchaseProduct"></select>
-<label>Adet</label><input id="purchaseQty" type="number" min="1">
-<label>Birim alış fiyatı</label><input id="purchasePrice" type="number" min="0" step=".01">
-<label>Ödeme durumu</label><select id="purchasePay"><option value="borc">Veresiye / Borç</option><option value="odendi">Ödendi</option></select>
-<button class="primary" onclick="addPurchase()">Faturayı Kaydet</button>
+<div class="panel table"><table><thead><tr><th>Tarih</th><th>Tür</th><th>Açıklama</th><th>Tutar</th></tr></thead><tbody id="cashTable"></tbody></table></div>
 </section>
-<section><h2>📊 Alış Geçmişi</h2><div id="purchaseList"></div></section>
-</div>
-<div id="returns" class="page">
-<section><h2>↩️ Satış İadesi</h2>
-<p class="muted">Satış iptali ile müşteri iadesi ayrı tutulur. İade, stoğu geri ekler ve ödeme hareketini kaydeder.</p>
-<label>İade edilecek satış</label><select id="returnSale"></select>
-<label>İade adedi</label><input id="returnQty" type="number" min="1" value="1">
-<label>İade nedeni</label><input id="returnReason" placeholder="Örn. Ürün beğenilmedi">
-<button class="primary" onclick="processReturn()">↩️ İadeyi Kaydet</button>
-</section>
-<section><h2>İade Geçmişi</h2><div id="returnHistory"></div></section>
-</div>
-<div id="prices" class="page">
-<section><h2>💲 Fiyat Geçmişi</h2>
-<label>Ürün</label><select id="priceProduct"></select>
-<label>Yeni alış fiyatı</label><input id="newBuy" type="number" step=".01">
-<label>Yeni satış fiyatı</label><input id="newSell" type="number" step=".01">
-<button class="primary" onclick="changePrice()">Fiyatı Güncelle</button>
-</section>
-<section><div id="priceHistory"></div></section>
-</div>
-<div id="moves" class="page">
-<section><h2>🔄 Stok Hareketleri</h2>
-<p class="muted">Satış, iptal ve stok düzeltmeleri burada izlenir.</p>
-<div id="movementList"></div>
-</section>
-</div>
-<div id="stock" class="page">
-<section><h2>📦 Ürün Ekle / Güncelle</h2>
-<label>Ürün adı</label><input id="pn">
-<label>Barkod</label><input id="pb">
-<label>Alış</label><input id="buy" type="number" step=".01">
-<label>Satış</label><input id="sell" type="number" step=".01">
-<label>Kategori</label><input id="pcat" placeholder="Örn. Aktar, Kozmetik">
-<label>Marka</label><input id="pbrand" placeholder="Örn. Zembilden">
-<label>Tedarikçi</label><input id="psupplier" placeholder="Tedarikçi adı">
-<label>Stok</label><input id="stockQty" type="number" min="0">
-<label>Minimum stok</label><input id="minQty" type="number" min="0" value="5">
-<button class="primary" onclick="addProduct()">Kaydet</button>
-</section><section><h2>➕ Stok Girişi / Çıkışı</h2>
-<label>Ürün</label><select id="moveProduct"></select>
-<label>İşlem</label><select id="moveType"><option value="purchase">Stok Girişi</option><option value="adjust_out">Stok Çıkışı</option><option value="waste">Fire</option><option value="return">İade Girişi</option></select>
-<label>Adet</label><input id="moveQty" type="number" min="1">
-<label>Açıklama</label><input id="moveNote" placeholder="Örn. Depodan geldi">
-<button class="primary" onclick="manualStockMove()">Hareket Kaydet</button>
-</section>
-<section><h2>Stok Listesi</h2><div id="stockList"></div></section>
-</div>
 
-<div id="cash" class="page">
-<section><h2>💰 Gider Ekle</h2>
-<label>Açıklama</label><input id="en">
-<label>Tutar</label><input id="ea" type="number" step=".01">
-<button class="primary" onclick="addExpense()">Gideri Kaydet</button>
-</section><section><h2>Giderler</h2><div id="expenseList"></div></section>
+<section id="current" class="page">
+<h2>🧾 Cari Hesap</h2>
+<div class="panel">
+<div class="row">
+<input id="currentName" placeholder="Cari adı">
+<select id="currentType"><option>Borç</option><option>Alacak</option></select>
+<input id="currentAmount" type="number" step=".01" placeholder="Tutar">
+</div><br><button onclick="addCurrent()">Kaydet</button>
 </div>
+<div class="panel table"><table><thead><tr><th>Tarih</th><th>Cari</th><th>Tür</th><th>Tutar</th></tr></thead><tbody id="currentTable"></tbody></table></div>
+</section>
 
-
-<div id="pos" class="page">
-<section><h2>⚡ Hızlı POS</h2>
-<label>Barkod okut / yaz</label>
-<input id="barcodeInput" placeholder="Barkodu okutun veya yazıp Enter'a basın" onkeydown="if(event.key==='Enter')scanBarcode()">
-<button class="primary" onclick="scanBarcode()">🔎 Ürünü Bul</button>
-<p class="muted">Barkod okuyucu klavye gibi çalışıyorsa doğrudan okutabilirsiniz.</p>
-</section>
-<section><h2>🧾 POS Sepeti</h2><div id="posCart"></div>
-<p>Ara toplam: <b id="posSubtotal">₺0</b></p>
-<label>İndirim</label><input id="posDiscount" type="number" min="0" value="0" oninput="renderPOS()">
-<p class="total">Toplam: <span id="posTotal">₺0</span></p>
-<label>Ödeme</label><select id="posPay" onchange="togglePOSCash()"><option>Nakit</option><option>Kredi Kartı</option></select>
-<div id="posCash"><label>Alınan Nakit</label><input id="posReceived" type="number" min="0" oninput="renderPOSChange()"><p>Para üstü: <b id="posChange">₺0</b></p></div>
-<button class="primary" onclick="completePOS()">✅ Satışı Tamamla</button>
-<button style="margin-left:8px" class="tool" onclick="clearPOS()">🗑️ Sepeti Temizle</button>
-</section>
+<section id="staff" class="page">
+<h2>👥 Personel Takip</h2>
+<div class="panel">
+<div class="row"><input id="staffName" placeholder="Personel adı"><select id="staffAction"><option>Giriş</option><option>Çıkış</option></select></div><br>
+<button onclick="staffOperation()">Kaydet</button>
 </div>
-
-<div id="realcash" class="page">
-<section><h2>💰 Günlük Kasa</h2>
-<label>Açılış kasası</label><input id="openingCash" type="number" min="0" step=".01">
-<button class="primary" onclick="setOpeningCash()">Açılış Kasasını Kaydet</button>
-<div class="cards" style="margin-top:12px">
-<div class="card">Beklenen Nakit<b id="expectedCash">₺0</b></div>
-<div class="card">Nakit Satış<b id="cashSales">₺0</b></div>
-<div class="card">Nakit Giriş<b id="cashIn">₺0</b></div>
-<div class="card">Nakit Çıkış<b id="cashOut">₺0</b></div>
-</div>
+<div class="panel table"><table><thead><tr><th>Tarih</th><th>Personel</th><th>İşlem</th></tr></thead><tbody id="staffTable"></tbody></table></div>
 </section>
-<section><h2>➕➖ Kasa Hareketi</h2>
-<label>İşlem</label><select id="cashType"><option value="in">Nakit Giriş</option><option value="out">Nakit Çıkış</option></select>
-<label>Açıklama</label><input id="cashNote" placeholder="Örn. kasaya para eklendi">
-<label>Tutar</label><input id="cashAmount" type="number" min="0" step=".01">
-<button class="primary" onclick="addCashMove()">Hareketi Kaydet</button>
-</section>
-<section><h2>🔚 Gün Sonu Sayımı</h2>
-<label>Kasada sayılan nakit</label><input id="countedCash" type="number" min="0" step=".01" oninput="renderCash()">
-<p>Kasa farkı: <strong id="cashDiff">₺0</strong></p>
-</section>
-</div>
-
-<div id="current" class="page">
-<section><h2>🧾 Cari</h2>
-<label>Ad / Firma</label><input id="cn">
-<label>İşlem</label><select id="ct"><option value="borc">Borç</option><option value="alacak">Alacak</option><option value="tahsilat">Tahsilat</option><option value="odeme">Ödeme</option></select>
-<label>Tutar</label><input id="ca" type="number" step=".01">
-<label>Açıklama</label><input id="co">
-<button class="primary" onclick="addCurrent()">Kaydet</button>
-</section><section><h2>Cari Listesi</h2><div id="currentList"></div></section>
-</div>
-
-<div id="users" class="page">
-<section><h2>🔐 Kullanıcı Yönetimi</h2>
-<p class="muted">Yönetici tam yetkilidir. Personel yalnızca POS ve temel satış ekranlarını kullanabilir.</p>
-<label>Ad Soyad</label><input id="un">
-<label>Kullanıcı adı</label><input id="uu">
-<label>Şifre</label><input id="up" type="password">
-<label>Rol</label><select id="ur"><option value="staff">Personel</option><option value="admin">Yönetici</option></select>
-<label>Aylık maaş</label><input id="us" type="number" min="0" step=".01" value="0"><label>Prim oranı (%)</label><input id="uc" type="number" min="0" step=".1" value="0">
-<button class="primary" onclick="addUser()">Kullanıcı Ekle</button>
-</section>
-<section><h2>Kullanıcılar</h2><div id="userList"></div></section>
-</div>
-<div id="staff" class="page">
-<section><h2>👥 Personel Yönetimi</h2>
-<label>Personel seç</label><select id="staffPick"></select>
-<label>Avans</label><input id="advanceAmount" type="number" min="0" step=".01">
-<label>Açıklama</label><input id="advanceNote" placeholder="Örn. maaş avansı">
-<button class="primary" onclick="addAdvance()">Avans Kaydet</button>
-<hr style="margin:18px 0;border:0;border-top:1px solid #eee">
-<h3>🕐 Vardiya</h3>
-<button class="primary" onclick="shiftIn()">Giriş Yap</button>
-<button class="tool" onclick="shiftOut()">Çıkış Yap</button>
-<div id="shiftStatus" class="muted" style="margin-top:8px"></div>
-</section>
-<section><h2>👥 Personel</h2>
-<label>Ad</label><input id="sn"><label>Aylık maaş</label><input id="ss" type="number" step=".01">
-<button class="primary" onclick="addStaff()">Personel Ekle</button>
-</section><section><h2>Personel Listesi</h2><div id="staffList"></div></section>
-</div>
-
-<div id="reports" class="page">
-<section><h2>📊 Raporlar</h2>
-<label>Dönem</label><select id="period" onchange="renderReports()"><option value="today">Bugün</option><option value="week">Son 7 Gün</option><option value="month">Bu Ay</option><option value="all">Tüm Zamanlar</option></select>
-<div class="cards"><div class="card">Ciro<b id="rSales">₺0</b></div><div class="card">Maliyet<b id="rCost">₺0</b></div><div class="card">Gider<b id="rExp">₺0</b></div><div class="card">Net Kâr<b id="rProfit">₺0</b></div></div>
-<p>Brüt kâr: <b id="rGross">₺0</b></p><p>Kâr marjı: <b id="rMargin">%0</b></p>
-</section><section><h2>🏆 En Çok Satanlar</h2><div id="top"></div></section>
-</div>
 </main>
+</div>
 
 <script>
-(function(){
-const KEY="zembilden_v6_data";
-let db=load(), cart=[], posCart=[]; db.users=db.users||[{id:"admin",name:"Yönetici",username:"admin",password:"1234",role:"admin",commission:0}]; db.stockMoves=db.stockMoves||[];db.priceHistory=db.priceHistory||[];db.returns=db.returns||[];db.suppliers=db.suppliers||[];db.purchases=db.purchases||[];db.supplierPayments=db.supplierPayments||[];db.cari2=db.cari2||[];db.suppliers=db.suppliers||[];db.purchases=db.purchases||[];db.supplierPayments=db.supplierPayments||[];db.returns=db.returns||[]; db.advances=db.advances||[]; db.shifts=db.shifts||[]; db.stockMoves=db.stockMoves||[]; let activeUser=null;
+const KEY='zembilden_v18';
+let D=JSON.parse(localStorage.getItem(KEY)||'{"products":[],"sales":[],"cash":[],"current":[],"staff":[]}');
+const money=n=>new Intl.NumberFormat('tr-TR',{style:'currency',currency:'TRY'}).format(Number(n)||0);
+const date=()=>new Date().toLocaleString('tr-TR');
+const save=()=>{localStorage.setItem(KEY,JSON.stringify(D));render()};
 
-function load(){
- try{
-  const x=JSON.parse(localStorage.getItem(KEY)||"null");
-  return x&&Array.isArray(x.products)?x:{products:[],sales:[],expenses:[],current:[],staff:[],cashMoves:[],openingCash:{},users:[],advances:[],shifts:[]};
- }catch(e){return {products:[],sales:[],expenses:[],current:[],staff:[],cashMoves:[],openingCash:{},users:[],advances:[],shifts:[]};}
+function login(){
+ if(username.value.trim()==='admin' && password.value==='1234'){
+  document.getElementById('login').style.display='none';
+  document.getElementById('app').style.display='block';
+  render();
+ }else error.textContent='Kullanıcı adı veya şifre hatalı.';
 }
-function save(){db.cashMoves=db.cashMoves||[];db.openingCash=db.openingCash||{};db.stockMoves=db.stockMoves||[];localStorage.setItem(KEY,JSON.stringify(db));renderAll();if(typeof renderStaffTools==="function")renderStaffTools();if(typeof renderMoveProducts==="function")renderMoveProducts();if(typeof renderPriceData==="function")renderPriceData();if(typeof renderReturns==="function")renderReturns();if(typeof renderSuppliers==="function")renderSuppliers();if(typeof renderCari2==="function")renderCari2();if(typeof renderV16Dashboard==="function")renderV16Dashboard();}
-function money(n){return new Intl.NumberFormat("tr-TR",{style:"currency",currency:"TRY"}).format(Number(n)||0);}
-window.login=function(){
- let u=document.getElementById("username").value.trim(), pw=document.getElementById("password").value;
- let found=(db.users||[]).find(x=>x.username===u&&x.password===pw);
- if(!found)return document.getElementById("loginError").textContent="Kullanıcı adı veya şifre hatalı.";
- activeUser=found;sessionStorage.setItem("zembilden_logged","1");document.getElementById("activeUserLabel").textContent="👤 "+found.name+" • "+(found.role==="admin"?"Yönetici":"Personel");sessionStorage.setItem("zembilden_user",found.username);
- document.getElementById("loginScreen").classList.add("hidden");applyRole();
-};
-window.logout=function(){sessionStorage.removeItem("zembilden_logged");location.reload();};
-window.page=function(id,btn){
- document.querySelectorAll(".page").forEach(x=>x.classList.remove("active"));
- document.getElementById(id).classList.add("active");
- document.querySelectorAll("nav button").forEach(x=>x.classList.remove("active"));btn.classList.add("active");
-};
-window.addProduct=function(){
- let p={id:Date.now(),name:pn.value.trim(),barcode:pb.value.trim(),buy:+buy.value||0,sell:+sell.value||0,qty:+stockQty.value||0,min:+minQty.value||0,category:pcat.value.trim(),brand:pbrand.value.trim(),supplier:psupplier.value.trim()};
- if(!p.name||p.sell<=0)return alert("Ürün adı ve satış fiyatı gerekli.");
- if(db.products.some(x=>x.barcode&&p.barcode&&x.barcode===p.barcode))return alert("Bu barkod zaten kayıtlı.");
- db.products.push(p);
- db.stockMoves=db.stockMoves||[];
- if(p.qty)db.stockMoves.push({date:new Date().toISOString(),productId:p.id,name:p.name,qty:p.qty,type:"purchase",note:"İlk stok",user:activeUser?activeUser.username:"admin"});
- pn.value=pb.value=buy.value=sell.value=stockQty.value=pcat.value=pbrand.value=psupplier.value="";minQty.value=5;save();
-};
-window.manualStockMove=function(){
- let id=+moveProduct.value,q=+moveQty.value||0,type=moveType.value,n=moveNote.value.trim();
- let p=db.products.find(x=>x.id===id);
- if(!p||q<=0)return alert("Ürün ve adet gerekli.");
- let signed=(type==="purchase"||type==="return")?q:-q;
- if(p.qty+signed<0)return alert("Stok yetersiz.");
- p.qty+=signed;
- db.stockMoves=db.stockMoves||[];
- db.stockMoves.push({date:new Date().toISOString(),productId:p.id,name:p.name,qty:signed,type,note:n,user:activeUser?activeUser.username:"admin"});
- moveQty.value="";moveNote.value="";save();alert("Stok hareketi kaydedildi.");
-};
-function renderMoveProducts(){moveProduct.innerHTML=db.products.map(p=>'<option value="'+p.id+'">'+p.name+' — stok '+p.qty+'</option>').join("")||'<option>Ürün yok</option>';}
-window.fillProducts=function(){
- let q=(search.value||"").toLowerCase();
- let arr=db.products.filter(p=>p.name.toLowerCase().includes(q)||p.barcode.toLowerCase().includes(q));
- productSelect.innerHTML=arr.map(p=>'<option value="'+p.id+'">'+p.name+" — "+money(p.sell)+" (stok: "+p.qty+")</option>").join("");
-};
-window.addCart=function(){
- let p=db.products.find(x=>x.id==productSelect.value),n=+qty.value||0;
- if(!p||n<1)return alert("Ürün ve adet seçin.");
- let old=cart.find(x=>x.id===p.id), total=(old?old.qty:0)+n;
- if(total>p.qty)return alert("Yeterli stok yok.");
- if(old)old.qty=total;else cart.push({id:p.id,name:p.name,qty:n,price:p.sell,buy:p.buy});
- qty.value=1;renderCart();
-};
-window.removeCart=function(id){cart=cart.filter(x=>x.id!==id);renderCart();};
-window.renderCart=function(){
- let sub=cart.reduce((a,x)=>a+x.price*x.qty,0),dis=Math.max(0,+discount.value||0),tot=Math.max(0,sub-dis);
- subtotal.textContent=money(sub);total.textContent=money(tot);
- cart.innerHTML=cart.length?cart.map(x=>'<p>'+x.name+' × '+x.qty+' — <b>'+money(x.price*x.qty)+'</b> <button class="danger" onclick="removeCart('+x.id+')">Sil</button></p>').join(""):"Sepet boş.";
- renderChange();
-};
-window.toggleCash=function(){cashArea.style.display=pay.value==="Nakit"?"block":"none";};
-window.renderChange=function(){
- let sub=cart.reduce((a,x)=>a+x.price*x.qty,0),tot=Math.max(0,sub-(+discount.value||0));
- change.textContent=money(Math.max(0,(+received.value||0)-tot));
-};
-function recordSale(items,payment,total){
- let now=new Date().toISOString(), saleIds=[];
- // Validate ALL stock before changing anything.
- for(const x of items){
-   const p=db.products.find(z=>z.id===x.id);
-   if(!p || p.qty < x.qty) throw new Error("Yetersiz stok: "+(x.name||"ürün"));
- }
- const sub=items.reduce((a,x)=>a+x.price*x.qty,0);
- const factor=sub?total/sub:1;
- for(const x of items){
-   const p=db.products.find(z=>z.id===x.id);
-   p.qty -= x.qty;
-   const sale={id:"S"+Date.now()+"_"+Math.random().toString(36).slice(2,8),date:now,name:x.name,productId:x.id,qty:x.qty,
-     sell:x.price*x.qty*factor,buy:x.buy*x.qty,payment,user:activeUser?activeUser.username:"admin",cancelled:false};
-   db.sales.push(sale); saleIds.push(sale.id);
-   db.stockMoves=db.stockMoves||[];
-   db.stockMoves.push({date:now,productId:x.id,name:x.name,qty:-x.qty,type:"sale",saleId:sale.id,user:sale.user});
- }
- return saleIds;
+function logout(){document.getElementById('app').style.display='none';document.getElementById('login').style.display='grid'}
+function page(id,btn){
+ document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));
+ document.getElementById(id).classList.add('active');
+ document.querySelectorAll('.nav button').forEach(x=>x.classList.remove('active'));
+ if(btn)btn.classList.add('active');
 }
-window.finishSale=function(){
- if(!cart.length)return alert("Sepet boş.");
- let sub=cart.reduce((a,x)=>a+x.price*x.qty,0),dis=Math.max(0,+discount.value||0),tot=Math.max(0,sub-dis);
- if(pay.value==="Nakit" && (+received.value||0)<tot)return alert("Alınan nakit yetersiz.");
- try{recordSale(cart,pay.value,tot);}catch(e){return alert(e.message);}
- cart=[];discount.value=0;received.value="";save();alert("Satış kaydedildi.");
-};
-window.cancelSale=function(index){
- let sale=db.sales[index];
- if(!sale || sale.cancelled)return alert("Bu satış zaten iptal edilmiş.");
- if(!confirm("Bu satışı iptal etmek ve "+sale.qty+" adet stoğu geri eklemek istiyor musunuz?"))return;
- let p=db.products.find(x=>x.id===sale.productId);
- // Backward compatibility for older sales: find by product/name.
- if(!p)p=db.products.find(x=>x.name===sale.name);
- if(!p)return alert("Ürün stokta bulunamadı; iptal edilemedi.");
- p.qty += sale.qty;
- sale.cancelled=true;sale.cancelledAt=new Date().toISOString();sale.cancelledBy=activeUser?activeUser.username:"admin";
- db.stockMoves=db.stockMoves||[];
- db.stockMoves.push({date:sale.cancelledAt,productId:p.id,name:p.name,qty:sale.qty,type:"sale_cancel",saleId:sale.id||("OLD_"+index),user:sale.cancelledBy});
- save();alert("Satış iptal edildi. "+sale.qty+" adet stok geri eklendi.");
-};
-window.completePOS=function(){
- if(!posCart.length)return alert("POS sepeti boş.");
- let sub=posCart.reduce((a,x)=>a+x.price*x.qty,0),dis=Math.max(0,+posDiscount.value||0),tot=Math.max(0,sub-dis);
- if(posPay.value==="Nakit" && (+posReceived.value||0)<tot)return alert("Alınan nakit yetersiz.");
- try{recordSale(posCart,posPay.value,tot);}catch(e){return alert(e.message);}
- posCart=[];posDiscount.value=0;posReceived.value="";save();alert("POS satışı kaydedildi.");
-};
-window.addExpense=function(){
- let a=+ea.value||0;if(!en.value.trim()||a<=0)return alert("Açıklama ve tutar gerekli.");
- db.expenses.push({date:new Date().toISOString(),name:en.value.trim(),amount:a});en.value=ea.value="";save();
-};
-window.addCurrent=function(){
- let a=+ca.value||0,n=cn.value.trim();if(!n||a<=0)return alert("Ad ve tutar gerekli.");
- db.current.push({date:new Date().toISOString(),name:n,type:ct.value,amount:a,note:co.value.trim()});cn.value=ca.value=co.value="";save();
-};
-window.addStaff=function(){
- let n=sn.value.trim(),a=+ss.value||0;if(!n||a<=0)return alert("Ad ve maaş gerekli.");
- db.staff.push({id:Date.now(),name:n,salary:a});sn.value=ss.value="";save();
-};
-window.backup=function(){
- let b=new Blob([JSON.stringify(db,null,2)],{type:"application/json"}),a=document.createElement("a");
- a.href=URL.createObjectURL(b);a.download="zembilden-yedek.json";document.body.appendChild(a);a.click();a.remove();
-};
-window.restoreData=function(e){
- let f=e.target.files[0];if(!f)return;let r=new FileReader();
- r.onload=function(){try{let x=JSON.parse(r.result);if(!x.products||!x.sales||!x.expenses)throw 0;db=x;db.current=db.current||[];db.staff=db.staff||[];db.cashMoves=db.cashMoves||[];db.openingCash=db.openingCash||{};db.stockMoves=db.stockMoves||[];db.advances=db.advances||[];db.shifts=db.shifts||[];save();alert("Yedek yüklendi.");}catch(err){alert("Geçersiz yedek.");}};r.readAsText(f);e.target.value="";
-};
-
-
-window.applyRole=function(){
- if(!activeUser)return;
- let admin=activeUser.role==="admin";
- document.querySelectorAll('nav button').forEach(btn=>{
-   let t=btn.textContent;
-   if(["📊 Yönetici","💰 Gerçek Kasa","🧾 Cari","👥 Personel","🔐 Kullanıcılar","📊 Rapor"].includes(t)) btn.style.display=admin?"":"none";
- });
-};
-window.addUser=function(){
- let name=un.value.trim(),username=uu.value.trim(),password=up.value,role=ur.value,commission=+uc.value||0,salary=+us.value||0;
- if(!name||!username||!password)return alert("Ad, kullanıcı adı ve şifre gerekli.");
- if((db.users||[]).some(x=>x.username===username))return alert("Bu kullanıcı adı zaten var.");
- db.users.push({id:Date.now(),name,username,password,role,commission,salary});un.value=uu.value=up.value=us.value="";uc.value=0;save();
-};
-window.deleteUser=function(id){
- if(id==="admin")return alert("Ana yönetici silinemez.");
- db.users=db.users.filter(x=>x.id!==id);save();
-};
-function renderUsers(){
- userList.innerHTML=(db.users||[]).map(u=>'<div class="card"><b>'+u.name+'</b><p>'+u.username+' — '+(u.role==="admin"?"Yönetici":"Personel")+'</p><p>Prim: '+u.commission+'%</p>'+(u.id==="admin"?"":'<button class="danger" onclick="deleteUser('+u.id+')">Sil</button>')+'</div>').join("");
+function addProduct(){
+ const n=productName.value.trim(),b=+buyPrice.value,s=+sellPrice.value,q=+stockQty.value;
+ if(!n||s<=0||q<0)return alert('Ürün bilgilerini doldurun.');
+ D.products.push({id:Date.now(),name:n,buy:b,sell:s,qty:q});
+ productName.value=buyPrice.value=sellPrice.value=stockQty.value='';
+ save();
 }
-window.scanBarcode=function(){
- let code=barcodeInput.value.trim();
- if(!code)return;
- let p=db.products.find(x=>String(x.barcode||"")===code);
- if(!p)return alert("Bu barkoda kayıtlı ürün bulunamadı.");
- if(p.qty<1)return alert("Bu ürünün stoğu yok.");
- let old=posCart.find(x=>x.id===p.id);
- if(old)old.qty++;else posCart.push({id:p.id,name:p.name,qty:1,price:p.sell,buy:p.buy});
- barcodeInput.value="";renderPOS();
-};
-window.removePOS=function(id){posCart=posCart.filter(x=>x.id!==id);renderPOS();};
-window.clearPOS=function(){posCart=[];renderPOS();};
-window.renderPOS=function(){
- let sub=posCart.reduce((a,x)=>a+x.price*x.qty,0),dis=Math.max(0,+posDiscount.value||0),tot=Math.max(0,sub-dis);
- posSubtotal.textContent=money(sub);posTotal.textContent=money(tot);
- posCart.innerHTML=posCart.length?posCart.map(x=>'<p>'+x.name+' × '+x.qty+' — <b>'+money(x.price*x.qty)+'</b> <button class="danger" onclick="removePOS('+x.id+')">Sil</button></p>').join(""):"Sepet boş.";
- renderPOSChange();
-};
-window.togglePOSCash=function(){posCash.style.display=posPay.value==="Nakit"?"block":"none";};
-window.renderPOSChange=function(){
- let sub=posCart.reduce((a,x)=>a+x.price*x.qty,0),tot=Math.max(0,sub-(+posDiscount.value||0));
- posChange.textContent=money(Math.max(0,(+posReceived.value||0)-tot));
-};
-window.completePOS=function(){
- if(!posCart.length)return alert("POS sepeti boş.");
- let sub=posCart.reduce((a,x)=>a+x.price*x.qty,0),dis=Math.max(0,+posDiscount.value||0),tot=Math.max(0,sub-dis);
- if(posPay.value==="Nakit" && (+posReceived.value||0)<tot)return alert("Alınan nakit yetersiz.");
- posCart.forEach(x=>{
-   let p=db.products.find(z=>z.id===x.id);
-   if(!p||p.qty<x.qty)throw new Error("STOK");
-   p.qty-=x.qty;
-   db.sales.push({date:new Date().toISOString(),name:x.name,qty:x.qty,sell:x.price*x.qty*(sub?tot/sub:1),buy:x.buy*x.qty,payment:posPay.value,user:activeUser?activeUser.username:"admin"});
- });
- posCart=[];posDiscount.value=0;posReceived.value="";save();alert("POS satışı kaydedildi.");
-};
-function todayKey(){return new Date().toISOString().slice(0,10);}
-window.setOpeningCash=function(){
- let a=+openingCash.value||0;
- if(a<0)return;
- db.openingCash=db.openingCash||{};db.openingCash[todayKey()]=a;save();alert("Açılış kasası kaydedildi.");
-};
-window.addCashMove=function(){
- let a=+cashAmount.value||0,n=cashNote.value.trim();
- if(a<=0||!n)return alert("Açıklama ve tutar gerekli.");
- db.cashMoves=db.cashMoves||[];db.cashMoves.push({date:new Date().toISOString(),type:cashType.value,amount:a,note:n});cashAmount.value="";cashNote.value="";save();
-};
-window.renderCash=function(){
- let k=todayKey(), opening=(db.openingCash||{})[k]||0;
- let sales=db.sales.filter(x=>!x.cancelled&&x.payment==="Nakit"&&x.date.slice(0,10)===k).reduce((a,x)=>a+x.sell,0);
- let moves=(db.cashMoves||[]).filter(x=>x.date.slice(0,10)===k);
- let cin=moves.filter(x=>x.type==="in").reduce((a,x)=>a+x.amount,0),out=moves.filter(x=>x.type==="out").reduce((a,x)=>a+x.amount,0);
- let expected=opening+sales+cin-out;
- cashSales.textContent=money(sales);cashIn.textContent=money(cin);cashOut.textContent=money(out);expectedCash.textContent=money(expected);
- cashDiff.textContent=money((+countedCash.value||0)-expected);
- openingCash.value=opening||"";
-};
-
-
-window.renderStaffTools=function(){
- let staffUsers=(db.users||[]).filter(x=>x.role==="staff");
- staffPick.innerHTML=staffUsers.map(x=>'<option value="'+x.username+'">'+x.name+'</option>').join("")||'<option value="">Personel yok</option>';
- let open=(db.shifts||[]).find(x=>x.username===(activeUser?activeUser.username:"")&&!x.out);
- shiftStatus.textContent=open?"Vardiya açık: "+new Date(open.in).toLocaleString("tr-TR"):"Açık vardiya yok.";
-};
-window.addAdvance=function(){
- let user=staffPick.value,a=+advanceAmount.value||0,n=advanceNote.value.trim();
- if(!user||a<=0)return alert("Personel ve avans tutarı gerekli.");
- db.advances.push({date:new Date().toISOString(),username:user,amount:a,note:n});advanceAmount.value=advanceNote.value="";save();
-};
-window.shiftIn=function(){
- if(!activeUser)return;
- if((db.shifts||[]).some(x=>x.username===activeUser.username&&!x.out))return alert("Zaten açık vardiyanız var.");
- db.shifts.push({id:Date.now(),username:activeUser.username,in:new Date().toISOString(),out:null});save();alert("Vardiya başladı.");
-};
-window.shiftOut=function(){
- if(!activeUser)return;
- let x=(db.shifts||[]).find(z=>z.username===activeUser.username&&!z.out);
- if(!x)return alert("Açık vardiya bulunamadı.");
- x.out=new Date().toISOString();save();alert("Vardiya kapatıldı.");
-};
-window.renderDashboard=function(){
- let today=new Date().toISOString().slice(0,10);
- let sales=db.sales.filter(x=>!x.cancelled&&x.date.slice(0,10)===today); let todayReturns=(db.returns||[]).filter(x=>x.date.slice(0,10)===today);
- let expenses=db.expenses.filter(x=>x.date.slice(0,10)===today);
- let salesTotal=sales.reduce((a,x)=>a+x.sell,0)-todayReturns.reduce((a,x)=>a+x.amount,0),cost=sales.reduce((a,x)=>a+x.buy,0)-todayReturns.reduce((a,x)=>a+x.cost,0),exp=expenses.reduce((a,x)=>a+x.amount,0);
- let cashSales=sales.filter(x=>x.payment==="Nakit").reduce((a,x)=>a+x.sell,0)-todayReturns.filter(x=>x.payment==="Nakit").reduce((a,x)=>a+x.amount,0);
- let posSales=sales.filter(x=>x.payment==="Kredi Kartı").reduce((a,x)=>a+x.sell,0);
- let opening=(db.openingCash||{})[today]||0;
- let moves=(db.cashMoves||[]).filter(x=>x.date.slice(0,10)===today);
- let cin=moves.filter(x=>x.type==="in").reduce((a,x)=>a+x.amount,0),out=moves.filter(x=>x.type==="out").reduce((a,x)=>a+x.amount,0);
- let cash=opening+cashSales+cin-out;
- let receivable=0,debt=0;
- [...new Set(db.current.map(x=>x.name))].forEach(n=>{
-   db.current.filter(x=>x.name===n).forEach(x=>{
-     let v=(x.type==="alacak"||x.type==="tahsilat")?x.amount:-x.amount;
-     if(v>=0)receivable+=v;else debt+=-v;
-   });
- });
- let stockQty=db.products.reduce((a,x)=>a+x.qty,0);
- let stockCost=db.products.reduce((a,x)=>a+x.qty*x.buy,0);
- let stockSales=db.products.reduce((a,x)=>a+x.qty*x.sell,0);
- let critical=db.products.filter(x=>x.qty<=x.min).length;
- dSales.textContent=money(salesTotal);dProfit.textContent=money(salesTotal-cost-exp);dCash.textContent=money(cash);dPos.textContent=money(posSales);
- dReceivable.textContent=money(receivable);dDebt.textContent=money(debt);dStockCost.textContent=money(stockCost);dCritical.textContent=critical;
- dStockQty.textContent=stockQty;dStockSales.textContent=money(stockSales);dStockProfit.textContent=money(stockSales-stockCost);
- let map={},pm={};sales.forEach(x=>{map[x.name]=(map[x.name]||0)+x.qty;pm[x.name]=(pm[x.name]||0)+(x.sell-x.buy)});
- let top=Object.entries(map).sort((a,b)=>b[1]-a[1]).slice(0,10);
- let ptop=Object.entries(pm).sort((a,b)=>b[1]-a[1]).slice(0,10);
- dashTop.innerHTML=top.length?"<table><tr><th>Ürün</th><th>Adet</th></tr>"+top.map(x=>"<tr><td>"+x[0]+"</td><td>"+x[1]+"</td></tr>").join("")+"</table>":"Bugün satış yok.";
- dashProfitTop.innerHTML=ptop.length?"<table><tr><th>Ürün</th><th>Brüt Kâr</th></tr>"+ptop.map(x=>"<tr><td>"+x[0]+"</td><td>"+money(x[1])+"</td></tr>").join("")+"</table>":"Bugün satış yok.";
- let by={};sales.forEach(x=>{let u=x.user||"admin";if(!by[u])by[u]={sales:0,qty:0};by[u].sales+=x.sell;by[u].qty+=x.qty;});
- staffPerformance.innerHTML=Object.entries(by).length?"<table><tr><th>Kullanıcı</th><th>Adet</th><th>Ciro</th></tr>"+Object.entries(by).map(x=>{let u=(db.users||[]).find(z=>z.username===x[0]);return "<tr><td>"+(u?u.name:x[0])+"</td><td>"+x[1].qty+"</td><td>"+money(x[1].sales)+"</td></tr>"}).join("")+"</table>":"Bugün satış yok.";
- let monthSales={}; let now=new Date();
- salesForMonth=db.sales.filter(x=>{let d=new Date(x.date);return !x.cancelled&&d.getMonth()===now.getMonth()&&d.getFullYear()===now.getFullYear();});
- salesForMonth.forEach(x=>monthSales[x.user||"admin"]=(monthSales[x.user||"admin"]||0)+x.sell);
- let salary=(db.users||[]).filter(x=>x.role==="staff").reduce((a,u)=>a+(+u.salary||0),0);
- let commission=(db.users||[]).filter(x=>x.role==="staff").reduce((a,u)=>a+(monthSales[u.username]||0)*(+u.commission||0)/100,0);
- let advances=(db.advances||[]).filter(x=>{let d=new Date(x.date);return d.getMonth()===now.getMonth()&&d.getFullYear()===now.getFullYear();}).reduce((a,x)=>a+x.amount,0);
- dSalary.textContent=money(salary);dCommission.textContent=money(commission);dAdvance.textContent=money(advances);dPayroll.textContent=money(salary+commission-advances);
-
-
-};
-function match(d,p){
- if(p==="all")return true;let x=new Date(d),n=new Date();
- if(p==="today")return x.toDateString()===n.toDateString();
- if(p==="week")return x>=new Date(Date.now()-7*86400000);
- return x.getMonth()===n.getMonth()&&x.getFullYear()===n.getFullYear();
+function sell(){
+ const p=D.products.find(x=>x.id==saleProduct.value),q=+saleQty.value;
+ if(!p||q<1)return alert('Ürün seçin.');
+ if(p.qty<q)return alert('Yetersiz stok.');
+ p.qty-=q;
+ const total=q*p.sell;
+ D.sales.push({id:Date.now(),date:date(),productId:p.id,name:p.name,qty:q,total});
+ D.cash.push({date:date(),type:'in',note:'Satış - '+p.name,amount:total});
+ save();
 }
-window.renderReports=function(){
- let p=period.value,s=db.sales.filter(x=>match(x.date,p)),e=db.expenses.filter(x=>match(x.date,p));
- let sales=s.reduce((a,x)=>a+x.sell,0),cost=s.reduce((a,x)=>a+x.buy,0),exp=e.reduce((a,x)=>a+x.amount,0),gross=sales-cost,net=gross-exp;
- rSales.textContent=money(sales);rCost.textContent=money(cost);rExp.textContent=money(exp);rProfit.textContent=money(net);rGross.textContent=money(gross);rMargin.textContent=(sales?net/sales*100:0).toFixed(1)+"%";
- let m={};s.forEach(x=>m[x.name]=(m[x.name]||0)+x.qty);let rows=Object.entries(m).sort((a,b)=>b[1]-a[1]).slice(0,10);
- top.innerHTML=rows.length?"<table><tr><th>Ürün</th><th>Adet</th></tr>"+rows.map(x=>"<tr><td>"+x[0]+"</td><td>"+x[1]+"</td></tr>").join("")+"</table>":"Henüz satış yok.";
-};
-
-
-window.changePrice=function(){
- let id=+priceProduct.value,p=db.products.find(x=>x.id===id);
- if(!p)return alert("Ürün seçin.");
- let nb=+newBuy.value,ns=+newSell.value;
- if(nb<=0||ns<=0)return alert("Fiyatlar sıfırdan büyük olmalı.");
- db.priceHistory=db.priceHistory||[];
- db.priceHistory.push({date:new Date().toISOString(),productId:p.id,name:p.name,oldBuy:p.buy,oldSell:p.sell,newBuy:nb,newSell:ns,user:activeUser?activeUser.username:"admin"});
- p.buy=nb;p.sell=ns;newBuy.value=newSell.value="";save();alert("Fiyatlar güncellendi.");
-};
-function renderPriceData(){
- priceProduct.innerHTML=db.products.map(p=>'<option value="'+p.id+'">'+p.name+'</option>').join("")||'<option>Ürün yok</option>';
- let rows=(db.priceHistory||[]).slice().reverse().slice(0,100);
- priceHistory.innerHTML=rows.length?'<table><tr><th>Tarih</th><th>Ürün</th><th>Alış</th><th>Satış</th></tr>'+rows.map(x=>'<tr><td>'+new Date(x.date).toLocaleString("tr-TR")+'</td><td>'+x.name+'</td><td>'+money(x.oldBuy)+' → '+money(x.newBuy)+'</td><td>'+money(x.oldSell)+' → '+money(x.newSell)+'</td></tr>').join("")+'</table>':'Fiyat değişikliği yok.';
+function returnSale(id){
+ const s=D.sales.find(x=>x.id===id);if(!s)return;
+ const p=D.products.find(x=>x.id===s.productId);if(p)p.qty+=s.qty;
+ D.sales=D.sales.filter(x=>x.id!==id);
+ const i=D.cash.findIndex(x=>x.note==='Satış - '+s.name&&x.amount===s.total);
+ if(i>=0)D.cash.splice(i,1);
+ save();
 }
-
-
-window.addCari2=function(){let type=cariType.value,name=cariName.value.trim(),action=cariAction.value,amount=+cariAmount.value||0,pay=cariPay.value,note=cariNote.value.trim();if(!name||amount<=0)return alert("Cari adı ve tutar gerekli.");let now=new Date().toISOString();db.cari2.push({id:"C"+Date.now(),date:now,type,name,action,amount,pay,note,user:activeUser?activeUser.username:"admin"});db.cashMoves=db.cashMoves||[];if(type==="musteri"&&action==="tahsilat"&&pay==="Nakit")db.cashMoves.push({date:now,type:"in",amount,note:"Cari tahsilat: "+name});if(type==="tedarikci"&&action==="odeme"&&pay==="Nakit")db.cashMoves.push({date:now,type:"out",amount,note:"Tedarikçi ödeme: "+name});cariName.value=cariAmount.value=cariNote.value="";save();alert("Cari işlemi kaydedildi.");};function cariBalance(rows){let v=0;rows.forEach(x=>{if(x.action==="borc")v+=x.amount;if(x.action==="alacak"||x.action==="tahsilat"||x.action==="odeme")v-=x.amount});return v;}function renderCari2(){let rows=db.cari2||[],q=(cariSearch.value||"").toLowerCase(),names=[...new Set(rows.map(x=>x.name))];cariBalances.innerHTML=names.map(n=>{let v=cariBalance(rows.filter(x=>x.name===n));return '<div class="card"><b>'+n+'</b><p>Bakiye: <strong>'+money(Math.abs(v))+'</strong> — '+(v>0?"Borç":v<0?"Alacak":"Kapalı")+'</p></div>'}).join("")||"Cari kayıt yok.";let f=rows.filter(x=>!q||x.name.toLowerCase().includes(q)).slice().reverse();cariStatement.innerHTML=f.length?'<table><tr><th>Tarih</th><th>Cari</th><th>İşlem</th><th>Tutar</th><th>Açıklama</th></tr>'+f.map(x=>'<tr><td>'+new Date(x.date).toLocaleString("tr-TR")+'</td><td>'+x.name+'</td><td>'+x.action+'</td><td>'+money(x.amount)+'</td><td>'+x.note+'</td></tr>').join("")+'</table>':"Kayıt yok.";}
-window.addSupplier=function(){
- let name=supName.value.trim();if(!name)return alert("Tedarikçi adı gerekli.");
- if((db.suppliers||[]).some(x=>x.name===name))return alert("Bu tedarikçi zaten kayıtlı.");
- db.suppliers.push({id:Date.now(),name,phone:supPhone.value.trim(),note:supNote.value.trim()});
- supName.value=supPhone.value=supNote.value="";save();
-};
-window.addPurchase=function(){
- let supplierId=+purchaseSupplier.value,productId=+purchaseProduct.value,q=+purchaseQty.value||0,price=+purchasePrice.value||0,pay=purchasePay.value,inv=invoiceNo.value.trim();
- let s=db.suppliers.find(x=>x.id===supplierId),p=db.products.find(x=>x.id===productId);
- if(!s||!p||q<=0||price<=0)return alert("Tedarikçi, ürün, adet ve alış fiyatı gerekli.");
- let total=q*price,now=new Date().toISOString(),user=activeUser?activeUser.username:"admin";
- // Weighted average cost keeps the stock cost realistic after purchases.
- let oldQty=p.qty,oldBuy=p.buy,newQty=oldQty+q;
- p.buy=((oldQty*oldBuy)+(q*price))/newQty;p.qty=newQty;
- let pur={id:"P"+Date.now()+"_"+Math.random().toString(36).slice(2,8),date:now,supplierId:s.id,supplier:s.name,invoice:inv,productId:p.id,name:p.name,qty:q,unitPrice:price,total,payment:pay,user};
- db.purchases.push(pur);
- db.stockMoves=db.stockMoves||[];db.stockMoves.push({date:now,productId:p.id,name:p.name,qty:q,type:"purchase",purchaseId:pur.id,note:"Alış faturası "+inv,user});
- if(pay==="borc"){db.current=db.current||[];db.current.push({date:now,name:s.name,type:"borc",amount:total,note:"Alış faturası "+inv,purchaseId:pur.id});}
- else {db.cashMoves=db.cashMoves||[];db.cashMoves.push({date:now,type:"out",amount:total,note:"Tedarikçi ödemesi: "+s.name+" / "+inv,purchaseId:pur.id});}
- invoiceNo.value=purchaseQty.value=purchasePrice.value="";save();alert("Alış faturası kaydedildi.");
-};
-function renderSuppliers(){
- purchaseSupplier.innerHTML=(db.suppliers||[]).map(s=>'<option value="'+s.id+'">'+s.name+'</option>').join("")||'<option>Önce tedarikçi ekleyin</option>';
- supplierList.innerHTML=(db.suppliers||[]).map(s=>{
-   let borc=(db.current||[]).filter(x=>x.name===s.name).reduce((a,x)=>a+(x.type==="borc"?x.amount:x.type==="odeme"?-x.amount:0),0);
-   return '<div class="card"><b>'+s.name+'</b><p>'+((s.phone)||"")+'</p><p>Borç: <strong>'+money(borc)+'</strong></p></div>';
- }).join("")||"Tedarikçi yok.";
- purchaseProduct.innerHTML=db.products.map(p=>'<option value="'+p.id+'">'+p.name+' — stok '+p.qty+'</option>').join("")||'<option>Ürün yok</option>';
- let rows=(db.purchases||[]).slice().reverse().slice(0,100);
- purchaseList.innerHTML=rows.length?'<table><tr><th>Tarih</th><th>Tedarikçi</th><th>Fatura</th><th>Ürün</th><th>Adet</th><th>Toplam</th><th>Durum</th></tr>'+rows.map(x=>'<tr><td>'+new Date(x.date).toLocaleString("tr-TR")+'</td><td>'+x.supplier+'</td><td>'+x.invoice+'</td><td>'+x.name+'</td><td>'+x.qty+'</td><td>'+money(x.total)+'</td><td>'+(x.payment==="borc"?"Borç":"Ödendi")+'</td></tr>').join("")+'</table>':'Alış faturası yok.';
+function cashOperation(){
+ const a=+cashAmount.value;if(a<=0)return alert('Tutar girin.');
+ D.cash.push({date:date(),type:cashType.value,note:cashNote.value||'-',amount:a});
+ cashAmount.value=cashNote.value='';save();
 }
-window.processReturn=function(){
- let saleId=returnSale.value, q=+returnQty.value||0, reason=returnReason.value.trim();
- let sale=db.sales.find(x=>String(x.id)===String(saleId));
- if(!sale||sale.cancelled)return alert("Geçerli, iptal edilmemiş bir satış seçin.");
- let already=(db.returns||[]).filter(x=>x.saleId===sale.id).reduce((a,x)=>a+x.qty,0);
- if(q<=0||already+q>sale.qty)return alert("İade adedi, kalan satış adedini aşamaz.");
- let p=db.products.find(x=>x.id===sale.productId)||db.products.find(x=>x.name===sale.name);
- if(!p)return alert("Ürün bulunamadı.");
- let unitSell=sale.sell/sale.qty, unitBuy=sale.buy/sale.qty, amount=unitSell*q, cost=unitBuy*q;
- let now=new Date().toISOString(), user=activeUser?activeUser.username:"admin";
- let r={id:"R"+Date.now()+"_"+Math.random().toString(36).slice(2,8),saleId:sale.id,productId:p.id,name:p.name,qty:q,amount,cost,payment:sale.payment,reason,date:now,user};
- db.returns.push(r);p.qty+=q;
- db.stockMoves=db.stockMoves||[];db.stockMoves.push({date:now,productId:p.id,name:p.name,qty:q,type:"return",returnId:r.id,note:reason,user});
- // Negative cash/POS movement for accounting.
- db.cashMoves=db.cashMoves||[];
- if(sale.payment==="Nakit")db.cashMoves.push({date:now,type:"out",amount,note:"Satış iadesi: "+p.name,returnId:r.id});
- db.returnPayments=db.returnPayments||[];db.returnPayments.push({date:now,amount,payment:sale.payment,returnId:r.id});
- returnSale.value="";returnQty.value=1;returnReason.value="";save();alert("İade kaydedildi. "+q+" adet stok geri eklendi.");
-};
-function renderReturns(){
- let eligible=db.sales.filter(x=>!x.cancelled).filter(s=>{let returned=(db.returns||[]).filter(r=>r.saleId===s.id).reduce((a,r)=>a+r.qty,0);return returned<s.qty;});
- returnSale.innerHTML=eligible.slice().reverse().slice(0,100).map(s=>{let returned=(db.returns||[]).filter(r=>r.saleId===s.id).reduce((a,r)=>a+r.qty,0);return '<option value="'+s.id+'">'+new Date(s.date).toLocaleString("tr-TR")+" — "+s.name+" × "+(s.qty-returned)+" — "+money(s.sell)+" ("+s.payment+")</option>"}).join("")||'<option>İade edilebilir satış yok</option>';
- let rows=(db.returns||[]).slice().reverse().slice(0,100);
- returnHistory.innerHTML=rows.length?'<table><tr><th>Tarih</th><th>Ürün</th><th>Adet</th><th>Tutar</th><th>Ödeme</th><th>Neden</th></tr>'+rows.map(r=>'<tr><td>'+new Date(r.date).toLocaleString("tr-TR")+'</td><td>'+r.name+'</td><td>'+r.qty+'</td><td>'+money(r.amount)+'</td><td>'+r.payment+'</td><td>'+(r.reason||"-")+'</td></tr>').join("")+'</table>':'Henüz iade yok.';
+function addCurrent(){
+ const n=currentName.value.trim(),a=+currentAmount.value;if(!n||a<=0)return;
+ D.current.push({date:date(),name:n,type:currentType.value,amount:a});
+ currentName.value=currentAmount.value='';save();
 }
-function renderMovements(){
- let rows=(db.stockMoves||[]).slice().reverse().slice(0,100);
- movementList.innerHTML=rows.length?'<table><tr><th>Tarih</th><th>Ürün</th><th>Hareket</th><th>Adet</th></tr>'+
- rows.map(x=>'<tr><td>'+new Date(x.date).toLocaleString("tr-TR")+'</td><td>'+x.name+'</td><td>'+(x.type==="sale"?"Satış":x.type==="sale_cancel"?"Satış İptali":"Stok")+'</td><td>'+((x.qty>0?"+":"")+x.qty)+'</td></tr>').join("")+'</table>':'Henüz stok hareketi yok.';
+function staffOperation(){
+ const n=staffName.value.trim();if(!n)return;
+ D.staff.push({date:date(),name:n,action:staffAction.value});
+ staffName.value='';save();
 }
-function renderV16Dashboard(){
- const today=new Date().toISOString().slice(0,10);
- const sales=(db.sales||[]).filter(x=>!x.cancelled);
- const ts=sales.filter(x=>x.date.slice(0,10)===today);
- const tr=(db.returns||[]).filter(x=>x.date.slice(0,10)===today);
- const te=(db.expenses||[]).filter(x=>x.date.slice(0,10)===today);
- const c=ts.reduce((a,x)=>a+x.sell,0)-tr.reduce((a,x)=>a+x.amount,0);
- const cost=ts.reduce((a,x)=>a+x.buy,0)-tr.reduce((a,x)=>a+x.cost,0);
- const ex=te.reduce((a,x)=>a+(+x.amount||0),0);
- const stock=(db.products||[]).reduce((a,x)=>a+(+x.qty||0)*(+x.buy||0),0);
- let rec=0, debt=0;
- (db.cari2||[]).forEach(x=>{
-   let v=(x.action==="borc"?x.amount:-x.amount);
-   if(x.type==="musteri") rec+=v; else if(x.type==="tedarikci") debt+=v;
- });
- v16Ciro.textContent=money(c);v16Profit.textContent=money(c-cost-ex);
- v16Qty.textContent=ts.reduce((a,x)=>a+x.qty,0);v16Return.textContent=money(tr.reduce((a,x)=>a+x.amount,0));
- v16Expense.textContent=money(ex);v16Stock.textContent=money(stock);
- v16Receivable.textContent=money(Math.max(0,rec));v16SupplierDebt.textContent=money(Math.max(0,debt));
- let rows='<table><tr><th>Gün</th><th>Ciro</th><th>Gider</th><th>Net Kâr</th></tr>';
- for(let i=6;i>=0;i--){
-  let d=new Date();d.setDate(d.getDate()-i);let k=d.toISOString().slice(0,10);
-  let s=sales.filter(x=>x.date.slice(0,10)===k),r=(db.returns||[]).filter(x=>x.date.slice(0,10)===k),e=(db.expenses||[]).filter(x=>x.date.slice(0,10)===k);
-  let sc=s.reduce((a,x)=>a+x.sell,0)-r.reduce((a,x)=>a+x.amount,0);
-  let cc=s.reduce((a,x)=>a+x.buy,0)-r.reduce((a,x)=>a+x.cost,0),ee=e.reduce((a,x)=>a+(+x.amount||0),0);
-  rows+='<tr><td>'+d.toLocaleDateString("tr-TR",{day:"2-digit",month:"2-digit"})+'</td><td>'+money(sc)+'</td><td>'+money(ee)+'</td><td>'+money(sc-cc-ee)+'</td></tr>';
- }
- v16SevenDays.innerHTML=rows+'</table>';
+function render(){
+ const sales=D.sales.reduce((a,x)=>a+x.total,0);
+ const expense=D.cash.filter(x=>x.type==='out').reduce((a,x)=>a+x.amount,0);
+ const income=D.cash.filter(x=>x.type==='in').reduce((a,x)=>a+x.amount,0);
+ ciro.textContent=money(sales);gider.textContent=money(expense);profit.textContent=money(sales-expense);
+ balance.textContent=money(income-expense);stockCount.textContent=D.products.length;
+ saleProduct.innerHTML=D.products.map(p=>`<option value="${p.id}">${p.name} — ${money(p.sell)} (stok: ${p.qty})</option>`).join('');
+ stockTable.innerHTML=D.products.map(p=>`<tr><td>${p.name}</td><td>${p.qty}</td><td>${money(p.buy)}</td><td>${money(p.sell)}</td><td><button class="danger" onclick="deleteProduct(${p.id})">Sil</button></td></tr>`).join('');
+ salesTable.innerHTML=D.sales.slice().reverse().map(s=>`<tr><td>${s.date}</td><td>${s.name}</td><td>${s.qty}</td><td>${money(s.total)}</td><td><button class="danger" onclick="returnSale(${s.id})">İade</button></td></tr>`).join('');
+ cashTable.innerHTML=D.cash.slice().reverse().map(x=>`<tr><td>${x.date}</td><td>${x.type==='in'?'Gelir':'Gider'}</td><td>${x.note}</td><td>${money(x.amount)}</td></tr>`).join('');
+ currentTable.innerHTML=D.current.slice().reverse().map(x=>`<tr><td>${x.date}</td><td>${x.name}</td><td>${x.type}</td><td>${money(x.amount)}</td></tr>`).join('');
+ staffTable.innerHTML=D.staff.slice().reverse().map(x=>`<tr><td>${x.date}</td><td>${x.name}</td><td>${x.action}</td></tr>`).join('');
 }
-window.quickPage=function(id){
- let btn=[...document.querySelectorAll("nav button")].find(b=>b.getAttribute("onclick")&&b.getAttribute("onclick").includes("page('"+id+"'"));
- if(btn)page(id,btn);
- else {document.querySelectorAll(".page").forEach(x=>x.classList.remove("active"));document.getElementById(id).classList.add("active");}
- window.scrollTo({top:0,behavior:"smooth"});
-};
-function renderAll(){
- fillProducts();renderCart();
- let sales=db.sales.reduce((a,x)=>a+x.sell,0),cost=db.sales.reduce((a,x)=>a+x.buy,0),exp=db.expenses.reduce((a,x)=>a+x.amount,0);
- hSales.textContent=money(sales);hCost.textContent=money(cost);hExpense.textContent=money(exp);hProfit.textContent=money(sales-cost-exp);
- lowStock.innerHTML=db.products.filter(p=>p.qty<=p.min).map(p=>"<p>⚠️ "+p.name+" — "+p.qty+" adet</p>").join("")||"Kritik stok yok.";
- stockList.innerHTML=db.products.length?"<table><tr><th>Ürün</th><th>Stok</th><th>Alış</th><th>Satış</th><th>Barkod</th></tr>"+db.products.map(p=>"<tr><td>"+p.name+"</td><td>"+p.qty+"</td><td>"+money(p.buy)+"</td><td>"+money(p.sell)+"</td><td>"+(p.barcode||"")+"</td></tr>").join("")+"</table>":"Ürün yok.";
- saleHistory.innerHTML=db.sales.slice().reverse().slice(0,20).map((x,i)=>{
- let realIndex=db.sales.length-1-i;
- return "<p>🛒 "+x.name+" × "+x.qty+" — <b>"+money(x.sell)+"</b> ("+x.payment+") "+(x.cancelled?"<strong>❌ İPTAL</strong>":'<button class="tool" onclick="cancelSale('+realIndex+')">Satışı İptal Et</button>')+"</p>";
-}).join("")||"Satış yok.";
- expenseList.innerHTML=db.expenses.slice().reverse().map(x=>"<p>💸 "+x.name+" — <b>"+money(x.amount)+"</b></p>").join("")||"Gider yok.";
- let names=[...new Set(db.current.map(x=>x.name))];currentList.innerHTML=names.length?names.map(n=>{let rs=db.current.filter(x=>x.name===n),b=rs.reduce((a,x)=>a+(x.type==="alacak"||x.type==="tahsilat"?x.amount:-x.amount),0);return '<div class="card"><b>'+n+"</b><p>Bakiye: "+money(b)+"</p></div>"}).join(""):"Cari yok.";
- staffList.innerHTML=db.staff.length?"<table><tr><th>Personel</th><th>Maaş</th></tr>"+db.staff.map(x=>"<tr><td>"+x.name+"</td><td>"+money(x.salary)+"</td></tr>").join("")+"</table>":"Personel yok.";
- renderReports();renderPOS();renderCash();renderDashboard();renderV16Dashboard();renderMovements();renderMoveProducts();renderPriceData();renderReturns();renderSuppliers();renderCari2();
-}
-window.renderAll=renderAll;
-window.renderUsers=renderUsers;window.renderMovements=renderMovements;window.renderReturns=renderReturns;
-if(sessionStorage.getItem("zembilden_logged")==="1")document.getElementById("loginScreen").classList.add("hidden");
-renderAll();renderUsers();renderStaffTools();
-let savedUser=sessionStorage.getItem("zembilden_user");if(savedUser){activeUser=(db.users||[]).find(x=>x.username===savedUser)||null;applyRole();if(activeUser)document.getElementById("activeUserLabel").textContent="👤 "+activeUser.name+" • "+(activeUser.role==="admin"?"Yönetici":"Personel");}
-})();
+function deleteProduct(id){if(confirm('Ürün silinsin mi?')){D.products=D.products.filter(x=>x.id!==id);save()}}
 </script>
 </body>
 </html>
