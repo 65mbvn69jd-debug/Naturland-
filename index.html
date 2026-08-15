@@ -31,7 +31,7 @@ main{max-width:1150px;margin:auto;padding:15px}.page{display:none}.page.active{d
 <h2>🔐 Zembilden İşletme V19</h2><p class="muted">Yönetici girişi</p>
 <div class="field"><label>Kullanıcı adı</label><input id="username" value="admin" autocomplete="username"></div>
 <div class="field"><label>Şifre</label><input id="password" type="password" value="1234" autocomplete="current-password"></div>
-<button style="width:100%" onclick="login()">Giriş Yap</button><div id="error" class="err"></div>
+<button style="width:100%" onclick="doLogin()">Giriş Yap</button><div id="error" class="err"></div>
 </div></div>
 
 <div id="app">
@@ -136,7 +136,15 @@ const money=n=>new Intl.NumberFormat('tr-TR',{style:'currency',currency:'TRY'}).
 const dt=()=>new Date().toLocaleString('tr-TR');
 const day=()=>new Date().toISOString().slice(0,10);
 const save=()=>{localStorage.setItem(KEY,JSON.stringify(D));render()};
-function login(){if(username.value.trim()==='admin'&&password.value==='1234'){login.style.display='none';app.style.display='block';render()}else error.textContent='Kullanıcı adı veya şifre hatalı.'}
+function doLogin(){
+ const u=document.getElementById('username').value.trim();
+ const pw=document.getElementById('password').value;
+ if(u==='admin'&&pw==='1234'){
+  document.getElementById('login').style.display='none';
+  document.getElementById('app').style.display='block';
+  render();
+ }else document.getElementById('error').textContent='Kullanıcı adı veya şifre hatalı.';
+}
 function logout(){app.style.display='none';login.style.display='grid'}
 function page(id,btn){document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('.nav button').forEach(x=>x.classList.remove('active'));if(btn)btn.classList.add('active')}
 function addProduct(){
